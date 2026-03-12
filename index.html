@@ -3,772 +3,752 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SETTLD — Less Effort. More Clients. No Headache.</title>
+<title>SETTLD</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --navy:    #1E1E7A;
-  --navy90:  rgba(30,30,122,0.9);
-  --navy60:  rgba(30,30,122,0.6);
-  --navy30:  rgba(30,30,122,0.3);
-  --navy12:  rgba(30,30,122,0.12);
-  --navy06:  rgba(30,30,122,0.06);
-  --sky:     #8ED2F9;
-  --sky60:   rgba(142,210,249,0.6);
-  --sky30:   rgba(142,210,249,0.3);
-  --sky12:   rgba(142,210,249,0.12);
-  --sky06:   rgba(142,210,249,0.06);
-  --cloud:   #F0EDE8;
-  --cloudD:  #E6E2DC;
-  --white:   #FFFFFF;
-  --ink:     #0E0E3A;
-  --d: 'Instrument Sans', sans-serif;
-  --s: 'Instrument Serif', serif;
+  --navy:#1E1E7A;
+  --navy80:rgba(30,30,122,0.80);
+  --navy60:rgba(30,30,122,0.60);
+  --navy30:rgba(30,30,122,0.30);
+  --navy12:rgba(30,30,122,0.12);
+  --navy06:rgba(30,30,122,0.06);
+  --sky:#8ED2F9;
+  --sky60:rgba(142,210,249,0.60);
+  --sky30:rgba(142,210,249,0.30);
+  --sky12:rgba(142,210,249,0.12);
+  --sky06:rgba(142,210,249,0.06);
+  --cloud:#F0EDE8;
+  --cloudD:#E6E2DC;
+  --white:#FFFFFF;
+  --ink:#0E0E3A;
+  --d:'Instrument Sans',sans-serif;
+  --s:'Instrument Serif',serif;
 }
 html{scroll-behavior:smooth;overflow-x:hidden}
-body{
-  font-family:var(--d);
-  background:var(--cloud);
-  color:var(--navy);
-  overflow-x:hidden;
-  cursor:none;
-}
+body{font-family:var(--d);background:var(--cloud);color:var(--navy);overflow-x:hidden;cursor:none}
 
-/* ── CURSOR ── */
+/* CURSOR */
 .cur{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);border-radius:50%}
 #c1{width:8px;height:8px;background:var(--navy);transition:width .2s,height .2s,background .2s}
-#c2{width:32px;height:32px;border:1px solid var(--navy30);background:transparent;transition:width .3s,height .3s,border-color .3s}
-.lh #c1{width:14px;height:14px;background:var(--sky)}
-.lh #c2{width:48px;height:48px;border-color:var(--sky60)}
+#c2{width:30px;height:30px;border:1px solid var(--navy30);background:transparent;transition:width .3s,height .3s,border-color .3s}
+.lh #c1{width:12px;height:12px;background:var(--sky)}
+.lh #c2{width:44px;height:44px;border-color:var(--sky60)}
+
+/* PAGE SYSTEM */
+.page{display:none;min-height:100vh;flex-direction:column}
+.page.active{display:flex}
 
 /* ── NAV ── */
 nav{
   position:fixed;top:0;width:100%;z-index:500;
-  height:64px;padding:0 56px;
+  height:60px;padding:0 48px;
   display:flex;align-items:center;justify-content:space-between;
-  transition:background .4s,border-color .4s;
-  border-bottom:1px solid transparent;
-}
-nav.sc{
   background:rgba(240,237,232,0.96);
   backdrop-filter:blur(20px);
-  border-color:var(--navy12);
+  border-bottom:1px solid var(--navy12);
 }
-.nav-logo{display:flex;align-items:baseline;text-decoration:none;gap:0;letter-spacing:-0.03em}
-.lb{font-family:var(--d);font-size:22px;font-weight:700;color:var(--navy);line-height:1}
-.ll{font-family:var(--d);font-size:22px;font-weight:400;color:var(--navy);line-height:1}
-.nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{font-size:14px;font-weight:500;color:var(--navy60);text-decoration:none;letter-spacing:.01em;transition:color .2s}
-.nav-links a:hover{color:var(--navy)}
+.nav-logo{display:flex;align-items:baseline;text-decoration:none;letter-spacing:-.03em;cursor:pointer}
+.lb{font-family:var(--d);font-size:20px;font-weight:700;color:var(--navy)}
+.ll{font-family:var(--d);font-size:20px;font-weight:400;color:var(--navy)}
+.nav-links{display:flex;gap:4px;list-style:none}
+.nav-links a{
+  font-size:13px;font-weight:500;color:var(--navy60);text-decoration:none;
+  padding:6px 14px;border-radius:6px;transition:all .2s;cursor:pointer;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--navy);background:var(--navy06)}
+/* Sky CTA in nav */
 .nav-cta{
   background:var(--navy);color:var(--cloud);
-  padding:9px 22px;border-radius:8px;
-  font-family:var(--d);font-size:14px;font-weight:600;letter-spacing:.01em;
-  text-decoration:none;
+  padding:8px 20px;border-radius:7px;
+  font-family:var(--d);font-size:13px;font-weight:700;letter-spacing:.01em;
+  text-decoration:none;cursor:pointer;
   transition:background .2s,transform .15s,box-shadow .2s;
-  border:1px solid transparent;
+  border:none;
 }
-.nav-cta:hover{background:var(--ink);transform:translateY(-1px);box-shadow:0 8px 24px var(--navy30)}
+.nav-cta:hover{background:var(--ink);transform:translateY(-1px);box-shadow:0 6px 20px var(--navy30)}
 
-/* ── HERO ── */
+/* ── LANDING PAGE ── */
+#page-home{background:var(--cloud)}
+
+/* Hero */
 .hero{
   min-height:100vh;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:100px 56px 80px;
+  display:grid;
+  grid-template-rows:1fr auto;
+  padding:80px 48px 0;
   position:relative;overflow:hidden;
-  background:var(--cloud);
 }
-
-/* Graph grid background — Harmonic signature */
+/* Graph grid */
 .hero-grid{
   position:absolute;inset:0;
   background-image:
-    linear-gradient(var(--navy06) 1px, transparent 1px),
-    linear-gradient(90deg, var(--navy06) 1px, transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 100% 100% at 50% 0%, black 40%, transparent 80%);
+    linear-gradient(var(--navy06) 1px,transparent 1px),
+    linear-gradient(90deg,var(--navy06) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,black 30%,transparent 75%);
 }
-
-/* Radial gradient glow top-right */
 .hero-glow{
-  position:absolute;
-  top:-200px;right:-200px;
-  width:800px;height:800px;
-  border-radius:50%;
-  background:radial-gradient(circle, var(--sky12) 0%, transparent 60%);
+  position:absolute;top:-150px;right:-150px;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,var(--sky12) 0%,transparent 60%);
   pointer-events:none;
 }
-
-/* Geometric accent — large circle outline */
-.geo-circle{
-  position:absolute;
-  right:-120px;top:50%;transform:translateY(-50%);
-  width:600px;height:600px;border-radius:50%;
-  border:1px solid var(--navy06);
-  pointer-events:none;
+/* Geometric rings */
+.geo-ring{
+  position:absolute;border-radius:50%;border:1px solid var(--navy06);pointer-events:none;
 }
-.geo-circle2{
-  position:absolute;
-  right:-40px;top:50%;transform:translateY(-50%);
-  width:440px;height:440px;border-radius:50%;
-  border:1px solid var(--sky12);
-  pointer-events:none;
-}
-/* Floating dot grid accent */
+.gr1{width:500px;height:500px;right:-100px;top:50%;transform:translateY(-45%)}
+.gr2{width:360px;height:360px;right:-30px;top:50%;transform:translateY(-45%);border-color:var(--sky12)}
+/* Dot grid */
 .geo-dots{
-  position:absolute;
-  right:80px;top:140px;
-  width:180px;height:180px;
-  background-image:radial-gradient(var(--navy12) 1.5px, transparent 1.5px);
-  background-size:18px 18px;
-  pointer-events:none;
-  opacity:.8;
+  position:absolute;right:72px;top:120px;
+  width:160px;height:160px;
+  background-image:radial-gradient(var(--navy12) 1.5px,transparent 1.5px);
+  background-size:16px 16px;pointer-events:none;
 }
 
-.hero-inner{position:relative;z-index:2;max-width:820px}
+.hero-inner{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;justify-content:center;
+  max-width:680px;padding-bottom:40px;
+}
 
+/* Badge */
 .hero-badge{
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--white);
-  border:1px solid var(--navy12);
-  padding:6px 14px 6px 8px;
-  border-radius:100px;
-  font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--navy60);margin-bottom:36px;
-  opacity:0;animation:up .6s ease .1s forwards;
+  background:var(--white);border:1px solid var(--navy12);
+  padding:5px 12px 5px 7px;border-radius:100px;
+  font-size:11px;font-weight:600;letter-spacing:.05em;
+  color:var(--navy60);margin-bottom:28px;
   box-shadow:0 2px 8px var(--navy06);
+  opacity:0;animation:up .6s ease .1s forwards;
 }
-.badge-pip{
-  width:6px;height:6px;border-radius:50%;background:var(--sky);
-  box-shadow:0 0 0 3px var(--sky30);
-  animation:pip 2s ease-in-out infinite;
-}
+.badge-pip{width:6px;height:6px;border-radius:50%;background:var(--sky);box-shadow:0 0 0 3px var(--sky30);animation:pip 2s ease-in-out infinite}
 @keyframes pip{0%,100%{box-shadow:0 0 0 3px var(--sky30)}50%{box-shadow:0 0 0 6px var(--sky12)}}
 
-/* Hero headline — mixed serif italic + sans bold */
+/* Headline */
 .hero-h1{
   font-family:var(--d);
-  font-size:clamp(52px,7.2vw,104px);
-  font-weight:700;
-  letter-spacing:-0.035em;
-  line-height:.95;
-  color:var(--navy);
-  margin-bottom:28px;
+  font-size:clamp(48px,6.5vw,92px);
+  font-weight:700;letter-spacing:-.035em;line-height:.93;
+  color:var(--navy);margin-bottom:22px;
   opacity:0;animation:up .8s ease .2s forwards;
 }
-.hero-h1 .serif-it{
-  font-family:var(--s);
-  font-style:italic;
-  font-weight:400;
-  color:var(--sky);
-  letter-spacing:-0.02em;
-}
-.hero-h1 .dim{
-  font-weight:400;
-  color:var(--navy30);
-}
+.hero-h1 .it{font-family:var(--s);font-style:italic;font-weight:400;color:var(--sky)}
+.hero-h1 .dim{font-weight:400;color:var(--navy30)}
 
 .hero-sub{
-  font-size:clamp(16px,1.4vw,19px);font-weight:400;
+  font-size:clamp(15px,1.3vw,18px);font-weight:400;
   color:var(--navy60);line-height:1.7;
-  max-width:480px;margin-bottom:44px;
-  opacity:0;animation:up .8s ease .35s forwards;
+  max-width:460px;margin-bottom:32px;
+  opacity:0;animation:up .8s ease .32s forwards;
 }
 
+/* Actions */
 .hero-actions{
-  display:flex;align-items:center;gap:16px;
-  opacity:0;animation:up .8s ease .5s forwards;
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;
+  opacity:0;animation:up .8s ease .44s forwards;
 }
-.btn-primary{
+/* SKY primary button */
+.btn-sky{
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--navy);color:var(--cloud);
-  padding:13px 28px;border-radius:8px;
-  font-family:var(--d);font-size:15px;font-weight:600;letter-spacing:.01em;
-  text-decoration:none;
+  background:var(--sky);color:var(--navy);
+  padding:12px 26px;border-radius:8px;
+  font-family:var(--d);font-size:14px;font-weight:700;letter-spacing:.01em;
+  text-decoration:none;border:none;cursor:pointer;
   transition:background .2s,transform .15s,box-shadow .2s;
 }
-.btn-primary:hover{background:var(--ink);transform:translateY(-2px);box-shadow:0 12px 40px var(--navy30)}
-.btn-primary .arr{
-  width:16px;height:16px;
-  border-radius:50%;
-  background:var(--sky);
-  display:inline-flex;align-items:center;justify-content:center;
-  font-size:10px;color:var(--navy);
-  transition:transform .2s;
-}
-.btn-primary:hover .arr{transform:translateX(2px)}
-.btn-ghost{
+.btn-sky:hover{background:#7BC8F7;transform:translateY(-2px);box-shadow:0 10px 32px var(--sky30)}
+.btn-sky .arr{font-size:14px;transition:transform .2s}
+.btn-sky:hover .arr{transform:translateX(3px)}
+.btn-outline{
+  display:inline-flex;align-items:center;
   font-size:14px;font-weight:500;color:var(--navy60);
-  text-decoration:none;letter-spacing:.01em;
-  padding:13px 20px;border-radius:8px;
-  border:1px solid var(--navy12);
-  transition:border-color .2s,color .2s,background .2s;
+  text-decoration:none;padding:12px 18px;border-radius:8px;
+  border:1px solid var(--navy12);background:transparent;cursor:pointer;
+  transition:all .2s;
 }
-.btn-ghost:hover{border-color:var(--navy30);color:var(--navy);background:var(--white)}
+.btn-outline:hover{border-color:var(--navy30);color:var(--navy);background:var(--white)}
 
-/* Hero stats */
-.hero-stats{
-  display:flex;gap:40px;margin-top:52px;
-  padding-top:40px;
+/* Micro urgency */
+.hero-urgency{
+  font-size:12px;font-weight:500;color:var(--navy30);letter-spacing:.02em;
+  opacity:0;animation:up .8s ease .52s forwards;
+}
+.hero-urgency span{color:var(--sky);font-weight:600}
+
+/* Stats strip */
+.stats-strip{
+  position:relative;z-index:2;
+  display:flex;gap:0;
   border-top:1px solid var(--navy12);
-  opacity:0;animation:up .8s ease .65s forwards;
+  background:rgba(240,237,232,0.6);
+  backdrop-filter:blur(8px);
 }
-.hs{flex:1}
-.hs-v{
+.stat-item{
+  flex:1;padding:18px 24px;
+  border-right:1px solid var(--navy12);
+  opacity:0;animation:up .7s ease forwards;
+}
+.stat-item:last-child{border-right:none}
+.stat-item:nth-child(1){animation-delay:.6s}
+.stat-item:nth-child(2){animation-delay:.7s}
+.stat-item:nth-child(3){animation-delay:.8s}
+.stat-item:nth-child(4){animation-delay:.9s}
+.sv{
   font-family:var(--d);
-  font-size:clamp(28px,3.5vw,44px);font-weight:700;
-  letter-spacing:-0.03em;color:var(--navy);line-height:1;
-  margin-bottom:6px;
+  font-size:clamp(22px,2.8vw,34px);font-weight:700;
+  letter-spacing:-.03em;color:var(--navy);line-height:1;margin-bottom:4px;
 }
-.hs-v .u{font-size:.55em;color:var(--sky);font-weight:600}
-.hs-l{font-size:13px;font-weight:400;color:var(--navy60);letter-spacing:.01em}
+.sv .u{font-size:.55em;color:var(--sky);font-weight:600}
+.sl{font-size:12px;font-weight:400;color:var(--navy60);letter-spacing:.01em}
 
-/* Hero dashboard preview */
-.hero-preview{
-  position:absolute;right:56px;top:50%;transform:translateY(-50%);
-  width:clamp(320px,38vw,520px);
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── EXPLORE TABS SECTION ── */
+.explore{
+  background:var(--white);
+  border-top:1px solid var(--navy12);
+}
+/* Tab nav */
+.tab-nav{
+  display:flex;gap:0;
+  border-bottom:1px solid var(--navy12);
+  padding:0 48px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:16px 24px;
+  font-family:var(--d);font-size:13px;font-weight:500;
+  color:var(--navy60);background:none;border:none;cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  white-space:nowrap;transition:all .2s;
+  text-decoration:none;
+}
+.tab-btn:hover{color:var(--navy)}
+.tab-btn.active{
+  color:var(--navy);font-weight:700;
+  border-bottom-color:var(--navy);
+}
+.tab-num{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--navy12);
+  font-size:10px;font-weight:700;color:var(--navy60);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.tab-btn.active .tab-num{background:var(--navy);color:var(--cloud)}
+
+/* Tab panels */
+.tab-panels{min-height:480px}
+.tab-panel{display:none;padding:48px}
+.tab-panel.active{display:block;animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TAB 1: PROBLEM ── */
+.prob-layout{display:grid;grid-template-columns:280px 1fr;gap:56px;align-items:start}
+.big-num{
+  font-family:var(--d);
+  font-size:clamp(80px,12vw,140px);
+  font-weight:700;letter-spacing:-.05em;line-height:.85;color:var(--navy);
+}
+.big-num .sfx{font-size:.3em;color:var(--sky);font-weight:600;vertical-align:super}
+.big-cap{font-size:15px;font-weight:400;color:var(--navy60);line-height:1.7;margin-top:16px;max-width:260px}
+.prob-rows{border-top:1px solid var(--navy12)}
+.pr{padding:20px 0;border-bottom:1px solid var(--navy12);display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:baseline}
+.pr-n{font-family:var(--d);font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-.03em;color:var(--navy12);transition:color .3s;line-height:1}
+.pr:hover .pr-n{color:var(--sky)}
+.pr-t{font-size:14px;font-weight:400;color:var(--navy60);line-height:1.6}
+.pr-t strong{color:var(--navy);font-weight:600}
+
+/* ── TAB 2: HOW IT WORKS ── */
+.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.how-step{
+  background:var(--cloud);border-radius:10px;
+  padding:28px 22px;border:1px solid var(--navy06);
+  position:relative;overflow:hidden;transition:all .3s;
+}
+.how-step:hover{background:var(--white);border-color:var(--navy12);transform:translateY(-2px);box-shadow:0 8px 24px var(--navy06)}
+.how-step::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--navy),var(--sky));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;
+}
+.how-step:hover::before{transform:scaleX(1)}
+.step-n{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--sky);margin-bottom:14px}
+.step-h{font-family:var(--d);font-size:16px;font-weight:700;letter-spacing:-.01em;color:var(--navy);margin-bottom:8px}
+.step-p{font-size:13px;font-weight:400;color:var(--navy60);line-height:1.6}
+/* Arrow connector */
+.how-steps-wrap{position:relative}
+
+/* ── TAB 3: PLATFORM ── */
+.plat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.plat-card{
+  background:var(--cloud);border-radius:10px;
+  padding:24px 22px;border:1px solid var(--navy06);
+  transition:all .3s;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.plat-card:hover{background:var(--white);border-color:var(--navy12);transform:translateY(-2px);box-shadow:0 8px 24px var(--navy06)}
+.plat-card.wide{grid-column:span 2}
+.plat-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--navy),var(--sky));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;
+}
+.plat-card:hover::after{transform:scaleX(1)}
+/* Mini vis in cards */
+.card-vis{height:100px;border-radius:7px;background:var(--white);border:1px solid var(--navy06);margin-bottom:16px;overflow:hidden;position:relative}
+/* scan anim */
+.scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--sky),transparent);box-shadow:0 0 10px var(--sky);animation:sd 2.8s ease-in-out infinite}
+@keyframes sd{0%{top:0;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:100%;opacity:0}}
+.doc-lines{padding:10px 12px;display:flex;flex-direction:column;gap:5px}
+.dl{height:4px;border-radius:2px;background:var(--navy06)}
+.w8{width:80%}.w6{width:60%}.w9{width:90%}.w5{width:50%}
+/* flow anim */
+.flow-vis{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:8px;height:100%}
+.fbox{flex:1;height:100%;background:var(--cloud);border:1px solid var(--navy06);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--navy)}
+.farr{width:32px;height:2px;background:linear-gradient(90deg,var(--navy),var(--sky));position:relative;overflow:hidden;flex-shrink:0}
+.farr::after{content:'';position:absolute;height:4px;top:-1px;left:-40%;width:40%;background:rgba(255,255,255,.7);animation:fl 1.4s ease-in-out infinite}
+@keyframes fl{0%{left:-40%}100%{left:140%}}
+/* recon bars */
+.recon-vis{padding:12px 14px;display:flex;flex-direction:column;justify-content:center;gap:7px}
+.rb{display:flex;align-items:center;gap:8px}
+.rt{font-size:8px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;width:48px;flex-shrink:0}
+.rt.g{color:var(--navy)}.rt.a{color:var(--sky)}.rt.w{color:var(--navy30)}
+.rtrack{flex:1;height:5px;background:var(--navy06);border-radius:3px;overflow:hidden}
+.rfill{height:100%;border-radius:3px;animation:grow 2s ease forwards}
+.f1{width:88%;background:var(--navy)}.f2{width:52%;background:var(--sky);animation-delay:.3s}.f3{width:70%;background:var(--navy30);animation-delay:.6s}
+@keyframes grow{from{width:0}}
+/* notif vis */
+.notif-vis{padding:10px 12px;display:flex;flex-direction:column;gap:5px}
+.nv{background:var(--cloud);border-radius:6px;padding:6px 8px;border:1px solid var(--navy06);display:flex;align-items:center;gap:6px;animation:sn .5s ease both}
+.nv:nth-child(2){animation-delay:.4s}.nv:nth-child(3){animation-delay:.8s}
+@keyframes sn{from{opacity:0;transform:translateX(-5px)}to{opacity:1;transform:translateX(0)}}
+.npip{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.np-b{background:var(--sky)}.np-n{background:var(--navy)}.np-l{background:var(--navy30)}
+.ntext{font-size:9px;color:var(--navy80);flex:1;font-weight:500}
+/* dash vis */
+.dash-vis{padding:10px 12px;display:flex;gap:7px}
+.dside{width:50px;background:var(--cloud);border-radius:5px;padding:7px;display:flex;flex-direction:column;gap:4px}
+.di{height:3px;border-radius:2px;background:var(--navy12)}
+.di.a{background:var(--sky);width:70%}
+.dgrid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.dw{background:var(--cloud);border-radius:5px;padding:6px 8px}
+.dv{font-family:var(--d);font-size:13px;font-weight:700;color:var(--navy);line-height:1}
+.dv small{font-size:8px;color:var(--sky);font-weight:600}
+.dl2{font-size:7px;letter-spacing:.05em;text-transform:uppercase;color:var(--navy60);margin-top:1px}
+.db{height:2px;background:var(--navy12);border-radius:1px;margin-top:5px;overflow:hidden}
+.dbf{height:100%;background:var(--navy);animation:grow 2s ease forwards;animation-delay:.4s}
+
+.pc-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:6px}
+.pc-h{font-family:var(--d);font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy);margin-bottom:5px;line-height:1.2}
+.pc-p{font-size:12px;font-weight:400;color:var(--navy60);line-height:1.55}
+
+/* ── TAB 4: EARLY ACCESS ── */
+.ea-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.ea-left{}
+.ea-tag{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.ea-tag::before{content:'';width:16px;height:1px;background:var(--sky)}
+.ea-h{font-family:var(--d);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-.03em;line-height:.95;color:var(--navy);margin-bottom:16px}
+.ea-h em{font-style:normal;color:var(--sky)}
+.ea-h .it{font-family:var(--s);font-style:italic;font-weight:400}
+.ea-sub{font-size:15px;font-weight:400;color:var(--navy60);line-height:1.7;margin-bottom:28px;max-width:360px}
+.ea-perks{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.ea-perk{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px;background:var(--cloud);border-radius:8px;
+  border:1px solid var(--navy06);
+}
+.perk-pip{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--navy);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--sky);font-weight:700;flex-shrink:0;
+}
+.perk-t{font-size:13px;font-weight:500;color:var(--navy);line-height:1.3}
+.perk-t span{color:var(--navy60);font-weight:400;font-size:12px;display:block}
+/* Apply card */
+.ea-right{
+  background:var(--navy);border-radius:16px;
+  padding:36px 32px;position:relative;overflow:hidden;
+}
+.ea-right::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(142,210,249,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(142,210,249,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+/* Rings in card */
+.ea-ring{position:absolute;border-radius:50%;border:1px solid rgba(142,210,249,0.06);pointer-events:none}
+.er1{width:300px;height:300px;right:-100px;bottom:-100px}
+.er2{width:200px;height:200px;right:-50px;bottom:-50px}
+.ea-card-inner{position:relative;z-index:2}
+.ea-card-logo{display:flex;align-items:baseline;letter-spacing:-.03em;margin-bottom:6px}
+.ecl-b{font-family:var(--d);font-size:28px;font-weight:700;color:var(--cloud)}
+.ecl-l{font-family:var(--d);font-size:28px;font-weight:300;color:rgba(240,237,232,.5)}
+.ea-card-tag{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sky60);margin-bottom:24px}
+.ea-card-h{font-family:var(--d);font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--cloud);margin-bottom:8px;line-height:1.2}
+.ea-card-sub{font-size:14px;font-weight:400;color:rgba(240,237,232,.55);line-height:1.65;margin-bottom:28px}
+.ea-spots{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(142,210,249,0.08);
+  border:1px solid rgba(142,210,249,0.15);
+  border-radius:8px;padding:10px 14px;margin-bottom:24px;
+}
+.spots-bar{flex:1;height:4px;background:rgba(142,210,249,0.15);border-radius:2px;overflow:hidden}
+.spots-fill{height:100%;width:40%;background:var(--sky);border-radius:2px}
+.spots-text{font-size:12px;font-weight:600;color:var(--sky)}
+.ea-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;
+  background:var(--sky);color:var(--navy);
+  padding:13px 24px;border-radius:8px;
+  font-family:var(--d);font-size:14px;font-weight:700;letter-spacing:.01em;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  margin-bottom:10px;
+}
+.ea-btn:hover{background:#7BC8F7;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.ea-fine{font-size:11px;color:rgba(240,237,232,.25);text-align:center;letter-spacing:.03em}
+
+/* ── SUB PAGES ── */
+.subpage{padding:100px 48px 60px;min-height:100vh;background:var(--cloud)}
+.subpage-back{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:500;color:var(--navy60);
+  text-decoration:none;cursor:pointer;margin-bottom:40px;
+  padding:8px 14px;border-radius:6px;border:1px solid var(--navy12);
+  transition:all .2s;background:var(--white);
+}
+.subpage-back:hover{color:var(--navy);border-color:var(--navy30)}
+.subpage-eye{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.subpage-eye::before{content:'';width:16px;height:1px;background:var(--sky)}
+.subpage-h{font-family:var(--d);font-size:clamp(40px,6vw,80px);font-weight:700;letter-spacing:-.04em;line-height:.92;color:var(--navy);margin-bottom:20px}
+.subpage-h .it{font-family:var(--s);font-style:italic;font-weight:400}
+.subpage-h .sky{color:var(--sky)}
+.subpage-sub{font-size:clamp(15px,1.4vw,18px);font-weight:400;color:var(--navy60);line-height:1.7;max-width:560px;margin-bottom:64px}
+
+/* For CAs subpage */
+.ca-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:48px}
+.ca-card{background:var(--white);border-radius:12px;padding:28px 24px;border:1px solid var(--navy06);transition:all .3s}
+.ca-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px var(--navy12)}
+.ca-icon{
+  width:40px;height:40px;border-radius:8px;
+  background:var(--navy06);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;margin-bottom:16px;
+}
+.ca-h{font-family:var(--d);font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--navy);margin-bottom:8px}
+.ca-p{font-size:13px;font-weight:400;color:var(--navy60);line-height:1.6}
+.ca-stat{font-family:var(--d);font-size:28px;font-weight:700;letter-spacing:-.03em;color:var(--sky);margin-top:16px}
+.ca-stat-l{font-size:11px;color:var(--navy60)}
+
+/* How it works subpage */
+.hiw-steps{display:flex;flex-direction:column;gap:1px;background:var(--navy12);border-radius:12px;overflow:hidden;margin-bottom:48px}
+.hiw-step{
+  background:var(--white);padding:32px 36px;
+  display:grid;grid-template-columns:64px 1fr;gap:28px;align-items:start;
+  transition:background .2s;
+}
+.hiw-step:hover{background:var(--cloud)}
+.hiw-num{
+  font-family:var(--d);font-size:44px;font-weight:700;letter-spacing:-.04em;
+  color:var(--navy12);line-height:1;transition:color .3s;
+}
+.hiw-step:hover .hiw-num{color:var(--sky)}
+.hiw-content{}
+.hiw-h{font-family:var(--d);font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--navy);margin-bottom:8px}
+.hiw-p{font-size:14px;font-weight:400;color:var(--navy60);line-height:1.7;max-width:560px}
+.hiw-tag{display:inline-block;background:var(--sky12);color:var(--navy);font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:10px}
+
+/* Accuracy bar */
+.acc-bar-wrap{margin-top:16px;max-width:400px}
+.acc-label{display:flex;justify-content:space-between;font-size:12px;color:var(--navy60);margin-bottom:6px}
+.acc-label span{color:var(--sky);font-weight:600}
+.acc-track{height:6px;background:var(--navy06);border-radius:3px;overflow:hidden}
+.acc-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--sky));border-radius:3px;animation:grow 2s ease forwards;animation-delay:.3s}
+
+/* Footer */
+footer{
+  background:var(--ink);padding:40px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.foot-logo{display:flex;align-items:baseline;text-decoration:none;letter-spacing:-.03em;cursor:pointer}
+.fb{font-family:var(--d);font-size:18px;font-weight:700;color:rgba(240,237,232,.6)}
+.fl2{font-family:var(--d);font-size:18px;font-weight:400;color:rgba(240,237,232,.4)}
+.foot-links{display:flex;gap:24px;list-style:none}
+.foot-links a{font-size:12px;font-weight:400;color:rgba(240,237,232,.25);text-decoration:none;transition:color .2s;cursor:pointer}
+.foot-links a:hover{color:rgba(240,237,232,.6)}
+.foot-copy{font-size:11px;color:rgba(240,237,232,.15);letter-spacing:.04em}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav,.hero,.stats-strip,.subpage{padding-left:24px;padding-right:24px}
+  .tab-nav{padding:0 24px}
+  .tab-panel{padding:32px 24px}
+  .prob-layout{grid-template-columns:1fr;gap:32px}
+  .how-steps{grid-template-columns:1fr 1fr}
+  .plat-grid{grid-template-columns:1fr 1fr}
+  .plat-card.wide{grid-column:span 2}
+  .ea-layout{grid-template-columns:1fr;gap:32px}
+  .ca-grid{grid-template-columns:1fr 1fr}
+  footer{flex-direction:column;gap:16px;text-align:center}
+}
+@media(max-width:640px){
+  .how-steps{grid-template-columns:1fr}
+  .plat-grid{grid-template-columns:1fr}
+  .plat-card.wide{grid-column:span 1}
+  .ca-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hiw-step{grid-template-columns:1fr}
+  .hiw-num{font-size:28px}
+}
+
+/* ── 3D FLOATING CARD on hero preview ── */
+.hero-float-card{
+  position:absolute;
+  right:60px;top:50%;transform:translateY(-50%);
+  width:clamp(280px,32vw,400px);
+  perspective:1000px;
+  pointer-events:none;
+  opacity:0;animation:fadeUp3d .9s ease .5s forwards;
+}
+@keyframes fadeUp3d{from{opacity:0;transform:translateY(-40%) rotateX(10deg)}to{opacity:1;transform:translateY(-50%) rotateX(0deg)}}
+.hfc-inner{
   background:var(--white);
   border:1px solid var(--navy12);
   border-radius:16px;
   padding:0;overflow:hidden;
-  box-shadow:0 32px 80px rgba(30,30,122,0.12), 0 4px 16px rgba(30,30,122,0.06);
-  opacity:0;animation:slideLeft .9s ease .4s forwards;
+  box-shadow:
+    0 2px 4px rgba(30,30,122,0.04),
+    0 8px 24px rgba(30,30,122,0.08),
+    0 32px 64px rgba(30,30,122,0.12),
+    0 0 0 1px rgba(255,255,255,0.6) inset;
+  transform-style:preserve-3d;
+  animation:float3d 6s ease-in-out infinite;
 }
-@keyframes slideLeft{from{opacity:0;transform:translateY(-48%) translateX(20px)}to{opacity:1;transform:translateY(-50%) translateX(0)}}
-
-.prev-bar{
-  background:var(--cloudD);
-  padding:10px 16px;
-  display:flex;align-items:center;gap:8px;
+@keyframes float3d{
+  0%,100%{transform:rotateX(2deg) rotateY(-3deg) translateY(0px)}
+  33%{transform:rotateX(-1deg) rotateY(2deg) translateY(-8px)}
+  66%{transform:rotateX(1deg) rotateY(-2deg) translateY(-4px)}
+}
+.hfc-bar{
+  background:var(--cloudD);padding:9px 14px;
+  display:flex;align-items:center;gap:7px;
   border-bottom:1px solid var(--navy06);
 }
-.prev-dots{display:flex;gap:5px}
-.prev-dot{width:8px;height:8px;border-radius:50%}
-.pd1{background:#FF5F57}.pd2{background:#FEBC2E}.pd3{background:#28C840}
-.prev-url{
-  flex:1;background:var(--cloud);border-radius:4px;
-  padding:4px 10px;font-size:10px;color:var(--navy60);letter-spacing:.02em;
-  text-align:center;
-}
-.prev-body{padding:20px}
-.prev-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--navy60);margin-bottom:16px}
-/* Mini chart */
-.mini-chart{
-  height:80px;position:relative;
-  margin-bottom:16px;
-  background:linear-gradient(180deg, var(--sky06) 0%, transparent 100%);
-  border-radius:8px;overflow:hidden;
-}
-.chart-svg{width:100%;height:100%}
-/* Mini stat cards */
-.prev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.pg{
-  background:var(--cloud);border-radius:8px;
-  padding:10px 12px;border:1px solid var(--navy06);
-}
-.pg-v{font-family:var(--d);font-size:16px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:3px}
-.pg-v small{font-size:10px;color:var(--sky);font-weight:600}
-.pg-l{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy60)}
-/* Invoice row */
-.prev-rows{}
-.prev-row{
-  display:flex;align-items:center;gap:10px;
-  padding:7px 0;border-bottom:1px solid var(--navy06);
-}
-.prev-row:last-child{border-bottom:none}
-.pr-icon{
-  width:26px;height:26px;border-radius:6px;
-  background:var(--sky12);
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;color:var(--navy);font-weight:700;flex-shrink:0;
-}
-.pr-info{flex:1}
-.pr-name{font-size:11px;font-weight:600;color:var(--navy);line-height:1.2}
-.pr-sub{font-size:9px;color:var(--navy60)}
-.pr-amt{font-family:var(--d);font-size:12px;font-weight:700;color:var(--navy)}
-.pr-status{
-  font-size:9px;font-weight:700;letter-spacing:.04em;
-  padding:2px 7px;border-radius:100px;
-}
-.st-done{background:rgba(30,30,122,0.08);color:var(--navy)}
-.st-pend{background:var(--sky12);color:var(--navy60)}
+.hfc-dots{display:flex;gap:5px}
+.hfc-dot{width:8px;height:8px;border-radius:50%}
+.hd1{background:#FF5F57}.hd2{background:#FEBC2E}.hd3{background:#28C840}
+.hfc-url{flex:1;background:var(--cloud);border-radius:4px;padding:3px 10px;font-size:9px;color:var(--navy60);text-align:center;letter-spacing:.02em}
+.hfc-body{padding:16px}
+.hfc-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy60);margin-bottom:12px}
+/* SVG sparkline */
+.hfc-chart{height:64px;border-radius:7px;background:linear-gradient(180deg,var(--sky06) 0%,transparent 100%);margin-bottom:12px;overflow:hidden;position:relative}
+.hfc-chart svg{width:100%;height:100%}
+/* Chart line draw animation */
+.chart-line{stroke-dasharray:420;stroke-dashoffset:420;animation:drawLine 2.2s cubic-bezier(.4,0,.2,1) 0.8s forwards}
+.chart-fill{opacity:0;animation:fillRise 2.2s cubic-bezier(.4,0,.2,1) 0.8s forwards}
+.chart-dot{opacity:0;animation:dotAppear .3s ease 3s forwards}
+@keyframes drawLine{to{stroke-dashoffset:0}}
+@keyframes fillRise{0%{opacity:0;transform:translateY(10px)}20%{opacity:1}100%{opacity:1;transform:translateY(0)}}
+@keyframes dotAppear{from{opacity:0}to{opacity:1}}
+/* Row slide-in stagger */
+.hfc-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--navy06);opacity:0;animation:rowSlide .4s ease both}
+.hfc-row:last-child{border-bottom:none}
+.hfc-row:nth-child(1){animation-delay:2.5s}
+.hfc-row:nth-child(2){animation-delay:2.7s}
+.hfc-row:nth-child(3){animation-delay:2.9s}
+@keyframes rowSlide{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+/* Done badge pop */
+.st-ok{background:var(--navy06);color:var(--navy);display:inline-flex;align-items:center;gap:3px}
+.st-ok .ck{display:inline-block;opacity:0;animation:checkPop .5s cubic-bezier(.34,1.56,.64,1) both}
+.hfc-row:nth-child(1) .ck{animation-delay:2.7s}
+.hfc-row:nth-child(3) .ck{animation-delay:3.1s}
+.st-ok-wrap{animation:doneFlash .5s ease both}
+.hfc-row:nth-child(1) .st-ok-wrap{animation-delay:2.7s}
+.hfc-row:nth-child(3) .st-ok-wrap{animation-delay:3.1s}
+@keyframes checkPop{0%{transform:scale(0) rotate(-20deg);opacity:0}60%{transform:scale(1.4) rotate(5deg);opacity:1}100%{transform:scale(1) rotate(0deg);opacity:1}}
+@keyframes doneFlash{0%{transform:scale(.8);opacity:0}50%{background:rgba(30,30,122,0.18);transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+/* Mini stats */
+.hfc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.hfc-stat{background:var(--cloud);border-radius:6px;padding:8px 10px;border:1px solid var(--navy06)}
+.hfc-sv{font-family:var(--d);font-size:14px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:2px}
+.hfc-sv small{font-size:9px;color:var(--sky);font-weight:600}
+.hfc-sl{font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:var(--navy60)}
+/* Invoice rows */
+.hfc-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--navy06)}
+.hfc-row:last-child{border-bottom:none}
+.hfc-ico{width:22px;height:22px;border-radius:5px;background:var(--sky12);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--navy);flex-shrink:0}
+.hfc-info{flex:1}
+.hfc-name{font-size:10px;font-weight:600;color:var(--navy);line-height:1.2}
+.hfc-sub{font-size:8px;color:var(--navy60)}
+.hfc-amt{font-family:var(--d);font-size:10px;font-weight:700;color:var(--navy)}
+.hfc-st{font-size:8px;font-weight:700;padding:2px 6px;border-radius:100px}
+.st-ok{background:var(--navy06);color:var(--navy)}
+.st-rv{background:var(--sky12);color:var(--navy60)}
 
-@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* 3D TILT on stat cards */
+.stat-item{
+  flex:1;padding:18px 24px;
+  border-right:1px solid var(--navy12);
+  opacity:0;animation:up .7s ease forwards;
+  transition:transform .3s ease, box-shadow .3s ease;
+  transform-style:preserve-3d;
+}
+.stat-item:hover{
+  transform:translateY(-3px) rotateX(4deg);
+  box-shadow:0 12px 32px var(--navy12);
+  z-index:2;
+}
 
-/* ── LOGOS / TRUST ── */
-.trust-section{
-  padding:40px 56px;
-  border-top:1px solid var(--navy12);
-  border-bottom:1px solid var(--navy12);
-  background:var(--white);
+/* 3D TILT on tab cards */
+.how-step, .plat-card, .ca-card{
+  transition:transform .4s cubic-bezier(.23,1,.32,1), box-shadow .4s ease, background .3s;
+  transform-style:preserve-3d;
+  will-change:transform;
 }
-.trust-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--navy30);margin-bottom:20px;text-align:center}
-.trust-logos{
-  display:flex;align-items:center;justify-content:center;
-  gap:48px;flex-wrap:wrap;
-}
-.trust-logo{
-  font-family:var(--d);font-size:15px;font-weight:700;
-  color:var(--navy30);letter-spacing:-0.01em;
-  transition:color .2s;
-}
-.trust-logo:hover{color:var(--navy60)}
 
-/* ── PROBLEM SECTION ── */
-.problem-section{
-  padding:120px 56px;
-  background:var(--cloud);
-  position:relative;overflow:hidden;
+/* Floating orbs animation on hero */
+.orb{
+  position:absolute;border-radius:50%;pointer-events:none;
+  animation:orbFloat linear infinite;
+  opacity:0;
 }
-/* Subtle grid background */
-.prob-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(var(--navy06) 1px, transparent 1px),
-    linear-gradient(90deg, var(--navy06) 1px, transparent 1px);
-  background-size:80px 80px;
-  opacity:.4;
+.orb1{
+  width:300px;height:300px;
+  top:10%;left:-100px;
+  background:radial-gradient(circle,var(--sky06) 0%,transparent 65%);
+  animation-duration:18s;animation-delay:0s;
 }
-.eyebrow{
-  font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--navy60);margin-bottom:20px;
-  display:flex;align-items:center;gap:8px;
+.orb2{
+  width:200px;height:200px;
+  top:60%;right:5%;
+  background:radial-gradient(circle,var(--navy06) 0%,transparent 65%);
+  animation-duration:14s;animation-delay:-4s;
 }
-.eyebrow::before{content:'';width:20px;height:1px;background:var(--sky)}
+@keyframes orbFloat{
+  0%{opacity:0;transform:translateY(0) scale(1)}
+  10%{opacity:1}
+  50%{transform:translateY(-40px) scale(1.05)}
+  90%{opacity:1}
+  100%{opacity:0;transform:translateY(-80px) scale(.95)}
+}
 
-.sec-h2{
+/* Animated gradient shimmer on hero headline */
+.hero-h1 .it{
+  font-family:var(--s);font-style:italic;font-weight:400;
+  background:linear-gradient(90deg, var(--sky) 0%, #6EC6FF 40%, var(--sky) 80%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shimmer 4s linear infinite;
+}
+@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
+
+/* Number flip animation on stats */
+.sv{
   font-family:var(--d);
-  font-size:clamp(36px,5vw,68px);
-  font-weight:700;letter-spacing:-0.03em;line-height:.95;
-  color:var(--navy);
+  font-size:clamp(22px,2.8vw,34px);font-weight:700;
+  letter-spacing:-.03em;color:var(--navy);line-height:1;margin-bottom:4px;
+  display:inline-block;
 }
-.sec-h2 .sky{color:var(--sky)}
-.sec-h2 .it{font-family:var(--s);font-style:italic;font-weight:400}
-.sec-h2 .dim{font-weight:400;color:var(--navy30)}
+.sv .u{font-size:.55em;color:var(--sky);font-weight:600}
 
-.prob-layout{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:80px;margin-top:64px;align-items:start;
-  position:relative;z-index:2;
-}
-
-/* Animated number */
-.big-num{
-  font-family:var(--d);
-  font-size:clamp(100px,16vw,200px);
-  font-weight:700;letter-spacing:-0.05em;
-  line-height:.85;color:var(--navy);
-}
-.big-num .sfx{font-size:.3em;color:var(--sky);vertical-align:super;font-weight:600}
-.big-cap{
-  font-size:clamp(15px,1.3vw,17px);font-weight:400;
-  color:var(--navy60);line-height:1.7;
-  margin-top:20px;max-width:320px;
-}
-
-.prob-items{}
-.pi{
-  padding:24px 0;border-bottom:1px solid var(--navy12);
-  display:grid;grid-template-columns:90px 1fr;
-  gap:16px;align-items:baseline;cursor:default;
-}
-.pi:first-child{border-top:1px solid var(--navy12)}
-.pi-n{
-  font-family:var(--d);
-  font-size:clamp(24px,3vw,38px);
-  font-weight:700;letter-spacing:-0.03em;
-  color:var(--navy12);transition:color .3s;line-height:1;
-}
-.pi:hover .pi-n{color:var(--sky)}
-.pi-t{font-size:14px;font-weight:400;color:var(--navy60);line-height:1.6}
-.pi-t strong{color:var(--navy);font-weight:600}
-
-/* ── HOW IT WORKS — dark section ── */
-.how-section{
-  background:var(--navy);
-  padding:120px 56px;
-  position:relative;overflow:hidden;
-}
-/* Graph grid on dark */
-.how-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(142,210,249,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(142,210,249,0.04) 1px, transparent 1px);
-  background-size:60px 60px;
-}
-/* Gradient orb */
-.how-orb{
-  position:absolute;left:-200px;top:50%;transform:translateY(-50%);
-  width:700px;height:700px;border-radius:50%;
-  background:radial-gradient(circle,rgba(142,210,249,0.06) 0%,transparent 65%);
-  pointer-events:none;
-}
-.how-orb2{
-  position:absolute;right:-150px;bottom:-100px;
-  width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(30,30,122,0.8) 0%,transparent 65%);
-  pointer-events:none;
-}
-
-.how-eyebrow{
-  font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--sky60);margin-bottom:20px;
-  display:flex;align-items:center;gap:8px;
-}
-.how-eyebrow::before{content:'';width:20px;height:1px;background:var(--sky30)}
-
-.how-h2{
-  font-family:var(--d);
-  font-size:clamp(38px,5vw,70px);
-  font-weight:700;letter-spacing:-0.03em;
-  line-height:.95;color:var(--cloud);
-  margin-bottom:24px;max-width:680px;
-}
-.how-h2 em{font-style:normal;color:var(--sky)}
-.how-h2 .it{font-family:var(--s);font-style:italic;font-weight:400}
-
-.how-sub{
-  font-size:clamp(15px,1.3vw,18px);font-weight:400;
-  color:rgba(240,237,232,.55);line-height:1.7;
-  max-width:500px;margin-bottom:60px;
-}
-
-/* Steps — horizontal cards */
-.how-steps{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:1px;background:rgba(142,210,249,0.06);
-  border-radius:12px;overflow:hidden;
-  position:relative;z-index:2;
-}
-.how-step{
-  background:rgba(30,30,122,0.6);
-  backdrop-filter:blur(10px);
-  padding:32px 24px;
-  position:relative;overflow:hidden;
-  transition:background .3s;
-}
-.how-step:hover{background:rgba(30,30,122,0.4)}
-/* Top accent */
-.how-step::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--sky),transparent);
-  opacity:0;transition:opacity .4s;
-}
-.how-step:hover::before{opacity:1}
-.step-num{
-  font-family:var(--d);
-  font-size:11px;font-weight:700;letter-spacing:.1em;
-  color:var(--sky60);margin-bottom:16px;
-}
-.step-title{
-  font-family:var(--d);
-  font-size:17px;font-weight:600;letter-spacing:-.01em;
-  color:var(--cloud);margin-bottom:10px;line-height:1.2;
-}
-.step-body{font-size:13px;font-weight:400;color:rgba(240,237,232,.5);line-height:1.6}
-
-/* ── PLATFORM / CARDS ── */
-.plat-section{padding:120px 56px;background:var(--cloud)}
-
-.plat-header{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:40px;align-items:end;margin-bottom:56px;
-}
-.plat-right{text-align:right}
-.plat-sub{font-size:15px;font-weight:400;color:var(--navy60);line-height:1.65;max-width:280px;margin-left:auto}
-
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.card{
-  background:var(--white);border-radius:12px;
-  padding:36px 32px;position:relative;overflow:hidden;
-  transition:transform .3s,box-shadow .3s;
-  border:1px solid var(--navy06);
-}
-.card:hover{transform:translateY(-3px);box-shadow:0 16px 48px var(--navy12)}
-.card.full{grid-column:span 2}
-/* Gradient top border on hover */
-.card::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--navy),var(--sky));
-  transform:scaleX(0);transform-origin:left;transition:transform .4s ease;
-}
-.card:hover::after{transform:scaleX(1)}
-
-.card-vis{
-  height:140px;border-radius:8px;
-  margin-bottom:24px;overflow:hidden;
-  background:var(--cloud);border:1px solid var(--navy06);
+/* Pulse ring on badge pip */
+.badge-pip{
+  width:6px;height:6px;border-radius:50%;background:var(--sky);
+  flex-shrink:0;
   position:relative;
 }
-
-/* Extraction vis */
-.v-ext{padding:14px;height:100%}
-.ext-doc{
-  background:var(--white);border-radius:6px;
-  border:1px solid var(--navy06);
-  height:112px;position:relative;overflow:hidden;
-  padding:12px 14px;display:flex;flex-direction:column;gap:6px;
+.badge-pip::after{
+  content:'';position:absolute;inset:-4px;
+  border-radius:50%;border:1px solid var(--sky);
+  animation:pulseRing 2s ease-in-out infinite;
 }
-.el{height:4px;border-radius:2px;background:var(--navy06)}
-.w8{width:80%}.w6{width:60%}.w9{width:90%}.w5{width:50%}.w7{width:70%}
+@keyframes pulseRing{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.5);opacity:0}}
+
+/* Smooth page transitions */
+.page{
+  animation:none;
+}
+.page.active{
+  animation:pageIn .4s cubic-bezier(.23,1,.32,1);
+}
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Tab panel transitions */
+.tab-panel.active{
+  animation:panelIn .35s cubic-bezier(.23,1,.32,1);
+}
+@keyframes panelIn{
+  from{opacity:0;transform:translateX(8px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+/* Scan line glow enhancement */
 .scan{
   position:absolute;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--sky),transparent);
-  box-shadow:0 0 12px var(--sky);
+  background:linear-gradient(90deg,transparent,var(--sky) 40%,#fff 50%,var(--sky) 60%,transparent);
+  box-shadow:0 0 8px 1px var(--sky60);
   animation:sd 2.8s ease-in-out infinite;
 }
-@keyframes sd{0%{top:0;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:100%;opacity:0}}
-.ext-res{
-  position:absolute;right:8px;top:8px;
-  background:var(--navy);border-radius:6px;padding:7px 10px;
-  animation:pop .5s cubic-bezier(.34,1.56,.64,1) 1.4s both;
+
+/* 3D depth on ea-right card */
+.ea-right{
+  background:var(--navy);border-radius:16px;
+  padding:36px 32px;position:relative;overflow:hidden;
+  transform-style:preserve-3d;
+  box-shadow:
+    0 4px 8px rgba(14,14,58,0.2),
+    0 16px 40px rgba(14,14,58,0.3),
+    0 32px 64px rgba(14,14,58,0.2);
+  transition:transform .4s cubic-bezier(.23,1,.32,1), box-shadow .4s;
 }
-@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-.er{display:flex;justify-content:space-between;gap:12px;margin-bottom:2px}
-.ek{font-size:8px;color:rgba(240,237,232,.4);letter-spacing:.06em}
-.ev{font-size:8px;color:var(--sky);font-weight:700}
-
-/* Tally vis */
-.v-tally{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px;height:100%}
-.tb{flex:1;height:100%;background:var(--white);border:1px solid var(--navy06);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
-.tbl{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy60)}
-.tbn{font-family:var(--d);font-size:14px;font-weight:700;color:var(--navy)}
-.t-mid{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
-.ta{width:40px;height:2px;background:linear-gradient(90deg,var(--navy),var(--sky));border-radius:1px;position:relative;overflow:hidden}
-.ta::after{content:'';position:absolute;height:4px;top:-1px;left:-40%;width:40%;background:rgba(255,255,255,.7);border-radius:2px;animation:fl 1.6s ease-in-out infinite}
-.ta.r::after{animation-delay:.8s}
-@keyframes fl{0%{left:-40%}100%{left:140%}}
-
-/* Recon vis */
-.v-recon{padding:16px 18px;display:flex;flex-direction:column;justify-content:center;gap:8px}
-.rr{display:flex;align-items:center;gap:8px}
-.rt{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;width:52px;flex-shrink:0}
-.rt.g{color:var(--navy)}.rt.a{color:var(--sky)}.rt.w{color:var(--navy30)}
-.rtrack{flex:1;height:5px;background:var(--navy06);border-radius:3px;overflow:hidden}
-.rfill{height:100%;border-radius:3px;animation:gr 2s ease forwards}
-.rfill.f1{width:88%;background:var(--navy)}.rfill.f2{width:52%;background:var(--sky);animation-delay:.3s}.rfill.f3{width:70%;background:var(--navy30);animation-delay:.6s}
-@keyframes gr{from{width:0}}
-.rv{font-family:var(--d);font-size:10px;font-weight:700;color:var(--navy60);width:32px;text-align:right;flex-shrink:0}
-
-/* Notifications vis */
-.v-notif{padding:12px 16px;display:flex;flex-direction:column;justify-content:center;gap:6px}
-.notif{background:var(--white);border-radius:8px;padding:8px 10px;border:1px solid var(--navy06);display:flex;align-items:flex-start;gap:8px;animation:sn .5s ease both}
-.notif:nth-child(2){animation-delay:.4s}.notif:nth-child(3){animation-delay:.8s}
-@keyframes sn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
-.npip{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:3px}
-.np-b{background:var(--sky)}.np-n{background:var(--navy)}.np-l{background:var(--navy30)}
-.nt{font-size:10px;color:var(--navy60);line-height:1.4;flex:1}
-.nt strong{color:var(--navy);font-weight:600;display:block;font-size:10px}
-.ntime{font-size:8px;color:var(--navy30);flex-shrink:0;padding-top:1px}
-
-/* Dashboard vis */
-.v-dash{padding:12px;display:flex;gap:8px}
-.dside{width:60px;background:var(--cloud);border-radius:6px;padding:8px;display:flex;flex-direction:column;gap:5px;flex-shrink:0}
-.di{height:4px;border-radius:2px;background:var(--navy12)}
-.di.act{background:var(--sky);width:70%}
-.dgrid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.dw{background:var(--cloud);border-radius:6px;padding:8px 10px;border:1px solid var(--navy06)}
-.dv{font-family:var(--d);font-size:16px;font-weight:700;color:var(--navy);line-height:1}
-.dv small{font-size:10px;color:var(--sky);font-weight:600}
-.dl{font-size:7px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy60);margin-top:2px}
-.db{height:2px;background:var(--navy12);border-radius:2px;margin-top:6px;overflow:hidden}
-.dbf{height:100%;background:var(--navy);border-radius:2px;animation:gr 2.5s ease forwards;animation-delay:.4s}
-
-.card-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:8px}
-.card-h{font-family:var(--d);font-size:clamp(18px,1.8vw,22px);font-weight:700;letter-spacing:-.02em;color:var(--navy);margin-bottom:8px;line-height:1.2}
-.card-p{font-size:13px;font-weight:400;color:var(--navy60);line-height:1.65}
-
-/* ── LOGO WATERMARK SECTION ── */
-.logo-section{
-  padding:100px 56px;
-  background:var(--navy);
-  position:relative;overflow:hidden;
-  text-align:center;
-}
-.logo-grid-bg{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(142,210,249,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(142,210,249,0.03) 1px, transparent 1px);
-  background-size:50px 50px;
-}
-/* Giant watermark logo in background */
-.logo-wm{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  display:flex;align-items:baseline;
-  letter-spacing:-0.04em;
-  pointer-events:none;user-select:none;
-  opacity:.04;
-}
-.wm-b{font-family:var(--d);font-size:clamp(140px,22vw,300px);font-weight:700;color:var(--cloud);line-height:1}
-.wm-l{font-family:var(--d);font-size:clamp(140px,22vw,300px);font-weight:300;color:var(--cloud);line-height:1}
-
-.logo-inner{position:relative;z-index:2}
-.logo-eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sky60);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:8px}
-.logo-eyebrow::before,.logo-eyebrow::after{content:'';flex:1;max-width:60px;height:1px;background:var(--sky30)}
-
-/* The actual logo centered */
-.logo-mark{
-  display:inline-flex;align-items:baseline;
-  letter-spacing:-0.04em;margin-bottom:28px;
-}
-.lm-b{font-family:var(--d);font-size:clamp(52px,7vw,96px);font-weight:700;color:var(--cloud);line-height:1}
-.lm-l{font-family:var(--d);font-size:clamp(52px,7vw,96px);font-weight:300;color:rgba(240,237,232,.5);line-height:1}
-
-.logo-tagline{
-  font-family:var(--d);
-  font-size:clamp(14px,1.4vw,18px);font-weight:400;
-  color:rgba(240,237,232,.4);letter-spacing:.04em;
-  margin-bottom:0;
+.ea-right:hover{
+  transform:translateY(-4px) rotateX(2deg);
+  box-shadow:
+    0 8px 16px rgba(14,14,58,0.2),
+    0 24px 56px rgba(14,14,58,0.35),
+    0 48px 80px rgba(14,14,58,0.25);
 }
 
-/* ── MOMENTUM ── */
-.mom-section{
-  padding:120px 56px;
-  background:var(--cloudD);
+/* Flowing gradient border on primary buttons */
+.btn-sky{
   position:relative;overflow:hidden;
 }
-.mom-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:1px;margin-top:56px;
-  background:var(--navy12);border-radius:12px;overflow:hidden;
+.btn-sky::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
+  transform:translateX(-100%);
+  transition:transform .6s ease;
 }
-.mom-item{
-  background:var(--cloud);padding:40px 28px;
-  transition:background .3s;cursor:default;
-  position:relative;
-}
-.mom-item:hover{background:var(--white)}
-.mom-item::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--sky);
-  transform:scaleX(0);transform-origin:left;transition:transform .4s;
-}
-.mom-item:hover::after{transform:scaleX(1)}
-.mom-v{
-  font-family:var(--d);
-  font-size:clamp(40px,5.5vw,64px);
-  font-weight:700;letter-spacing:-0.03em;
-  color:var(--navy);line-height:.9;margin-bottom:14px;
-  display:flex;align-items:baseline;gap:2px;
-}
-.mv-n{font-family:var(--d);font-size:inherit;font-weight:700;letter-spacing:inherit;color:var(--navy)}
-.mv-u{font-family:var(--d);font-size:inherit;font-weight:700;letter-spacing:inherit;color:var(--sky)}
-.mom-item:nth-child(2n) .mv-n{color:var(--sky)}
-.mom-item:nth-child(2n) .mv-u{color:var(--navy)}
-.mom-t{font-family:var(--d);font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px;letter-spacing:-.01em}
-.mom-p{font-size:13px;font-weight:400;color:var(--navy60);line-height:1.6}
+.btn-sky:hover::before{transform:translateX(100%)}
 
-/* ── CTA ── */
-.cta-section{
-  background:var(--navy);
-  padding:140px 56px 100px;
-  text-align:center;position:relative;overflow:hidden;
-}
-/* Grid bg */
-.cta-grid{
+/* Subtle grid lines that breathe */
+.hero-grid{
   position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(142,210,249,0.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(142,210,249,0.04) 1px,transparent 1px);
-  background-size:60px 60px;
+    linear-gradient(var(--navy06) 1px,transparent 1px),
+    linear-gradient(90deg,var(--navy06) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,black 30%,transparent 75%);
+  animation:gridBreath 8s ease-in-out infinite;
 }
-/* Geometric rings */
-.cta-ring{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  border-radius:50%;border:1px solid rgba(142,210,249,0.06);
-  pointer-events:none;
-}
-.cr1{width:400px;height:400px}
-.cr2{width:700px;height:700px}
-.cr3{width:1000px;height:1000px}
-/* Glow */
-.cta-glow{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,var(--sky06) 0%,transparent 65%);
-  pointer-events:none;
-}
-
-.cta-in{position:relative;z-index:2}
-.cta-eye{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sky60);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:8px}
-.cta-eye::before,.cta-eye::after{content:'';flex:1;max-width:40px;height:1px;background:var(--sky30)}
-
-.cta-h2{
-  font-family:var(--d);
-  font-size:clamp(44px,6.5vw,88px);
-  font-weight:700;letter-spacing:-0.03em;
-  line-height:.95;color:var(--cloud);margin-bottom:20px;
-}
-.cta-h2 em{font-style:normal;color:var(--sky)}
-.cta-h2 .it{font-family:var(--s);font-style:italic;font-weight:400}
-
-.cta-sub{
-  font-size:17px;font-weight:400;
-  color:rgba(240,237,232,.55);max-width:380px;margin:0 auto 44px;line-height:1.7;
-}
-.cta-actions{display:flex;align-items:center;justify-content:center;gap:14px}
-.cta-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--cloud);color:var(--navy);
-  padding:14px 32px;border-radius:8px;
-  font-family:var(--d);font-size:15px;font-weight:700;letter-spacing:.01em;
-  text-decoration:none;
-  transition:background .2s,transform .15s,box-shadow .2s;
-}
-.cta-btn:hover{background:var(--white);transform:translateY(-2px);box-shadow:0 16px 48px rgba(0,0,0,.2)}
-.cta-fine{margin-top:16px;font-size:12px;color:rgba(240,237,232,.25);font-weight:400;letter-spacing:.04em}
-
-/* ── FOOTER ── */
-footer{
-  background:var(--ink);padding:44px 56px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.foot-logo{display:flex;align-items:baseline;text-decoration:none;letter-spacing:-.03em}
-.fb{font-family:var(--d);font-size:18px;font-weight:700;color:rgba(240,237,232,.6)}
-.fl{font-family:var(--d);font-size:18px;font-weight:400;color:rgba(240,237,232,.4)}
-.foot-links{display:flex;gap:28px;list-style:none}
-.foot-links a{font-size:13px;font-weight:400;color:rgba(240,237,232,.25);text-decoration:none;transition:color .2s}
-.foot-links a:hover{color:rgba(240,237,232,.6)}
-.foot-copy{font-size:12px;color:rgba(240,237,232,.15);letter-spacing:.04em}
-
-/* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
-.reveal.in{opacity:1;transform:translateY(0)}
-.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
-.stagger>*{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
-.stagger.in>*:nth-child(1){transition-delay:.04s}
-.stagger.in>*:nth-child(2){transition-delay:.11s}
-.stagger.in>*:nth-child(3){transition-delay:.18s}
-.stagger.in>*:nth-child(4){transition-delay:.25s}
-.stagger.in>*:nth-child(5){transition-delay:.32s}
-.stagger.in>*{opacity:1;transform:translateY(0)}
-
-/* ── RESPONSIVE ── */
-@media(max-width:1100px){
-  nav,.hero,.problem-section,.how-section,.plat-section,.logo-section,.mom-section,.cta-section{padding-left:24px;padding-right:24px}
-  .trust-section{padding:32px 24px}
-  .hero-preview{display:none}
-  .prob-layout{grid-template-columns:1fr;gap:40px}
-  .how-steps{grid-template-columns:1fr 1fr}
-  .cards{grid-template-columns:1fr}
-  .card.full{grid-column:span 1}
-  .mom-grid{grid-template-columns:1fr 1fr}
-  .plat-header{grid-template-columns:1fr;gap:16px}
-  .plat-right{text-align:left}
-  .plat-sub{margin-left:0}
-  footer{flex-direction:column;gap:20px;text-align:center}
-  .hero-stats{flex-wrap:wrap}
-}
-@media(max-width:640px){
-  .how-steps{grid-template-columns:1fr}
-  .mom-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
-  .cta-actions{flex-direction:column}
+@keyframes gridBreath{
+  0%,100%{opacity:1}
+  50%{opacity:.6}
 }
 </style>
 </head>
@@ -777,374 +757,515 @@ footer{
 <div class="cur" id="c1"></div>
 <div class="cur" id="c2"></div>
 
-<!-- NAV -->
+<!-- NAV (always visible) -->
 <nav id="nav">
-  <a href="#home" class="nav-logo"><span class="lb">SETT</span><span class="ll">LD</span></a>
+  <a class="nav-logo" onclick="showPage('home')">
+    <span class="lb">SETT</span><span class="ll">LD</span>
+  </a>
   <ul class="nav-links">
-    <li><a href="#problem">Problem</a></li>
-    <li><a href="#solution">Solution</a></li>
-    <li><a href="#platform">Platform</a></li>
+    <li><a onclick="showPage('home');activateTab('problem')" class="nav-link" data-page="problem">The Problem</a></li>
+    <li><a onclick="showPage('cas')" class="nav-link" data-page="cas">For CAs</a></li>
+    <li><a onclick="showPage('how')" class="nav-link" data-page="how">How It Works</a></li>
   </ul>
-  <a href="#cta" class="nav-cta">Get Early Access</a>
+  <a class="nav-cta" onclick="showPage('home');activateTab('access')">Get Early Access</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="geo-circle"></div>
-  <div class="geo-circle2"></div>
-  <div class="geo-dots"></div>
+<!-- ═══════════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
 
-  <div class="hero-inner">
-    <div class="hero-badge"><span class="badge-pip"></span>Private Beta Open</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="geo-ring gr1"></div>
+    <div class="geo-ring gr2"></div>
+    <div class="geo-dots"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
 
-    <h1 class="hero-h1">
-      Less effort.<br>
-      <span class="dim">More clients.</span><br>
-      <span class="serif-it">No headache.</span>
-    </h1>
-
-    <p class="hero-sub">
-      SETTLD takes every hour you spend on manual compliance work and gives it back as capacity to grow your practice, serve more clients and stop worrying about who filed what.
-    </p>
-
-    <div class="hero-actions">
-      <a href="#cta" class="btn-primary">Get Early Access <span class="arr">→</span></a>
-      <a href="#solution" class="btn-ghost">See how it works</a>
-    </div>
-
-    <div class="hero-stats">
-      <div class="hs">
-        <div class="hs-v"><span class="count-anim" data-t="4">0</span>L<span class="u">+</span></div>
-        <div class="hs-l">CAs in India</div>
-      </div>
-      <div class="hs">
-        <div class="hs-v"><span class="count-anim" data-t="120">0</span><span class="u">hrs</span></div>
-        <div class="hs-l">Lost per firm monthly</div>
-      </div>
-      <div class="hs">
-        <div class="hs-v">₹<span class="count-anim" data-t="80">0</span><span class="u">K</span></div>
-        <div class="hs-l">Unrealised per year</div>
-      </div>
-      <div class="hs">
-        <div class="hs-v"><span class="count-anim" data-t="6">0</span><span class="u">Cr</span></div>
-        <div class="hs-l">MSMEs in India</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Dashboard preview card -->
-  <div class="hero-preview">
-    <div class="prev-bar">
-      <div class="prev-dots"><div class="prev-dot pd1"></div><div class="prev-dot pd2"></div><div class="prev-dot pd3"></div></div>
-      <div class="prev-url">app.getsettld.in</div>
-    </div>
-    <div class="prev-body">
-      <div class="prev-title">CA Dashboard — March 2026</div>
-      <!-- Mini chart -->
-      <div class="mini-chart">
-        <svg class="chart-svg" viewBox="0 0 400 80" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#8ED2F9" stop-opacity=".3"/>
-              <stop offset="100%" stop-color="#8ED2F9" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <path d="M0,60 C40,55 80,40 120,38 C160,36 200,50 240,32 C280,14 320,20 360,12 L400,8 L400,80 L0,80 Z" fill="url(#cg)"/>
-          <path d="M0,60 C40,55 80,40 120,38 C160,36 200,50 240,32 C280,14 320,20 360,12 L400,8" fill="none" stroke="#8ED2F9" stroke-width="1.5"/>
-          <circle cx="400" cy="8" r="3" fill="#8ED2F9">
-            <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/>
-          </circle>
-        </svg>
-      </div>
-      <!-- Stat grid -->
-      <div class="prev-grid">
-        <div class="pg"><div class="pg-v">48<small>clients</small></div><div class="pg-l">Active</div></div>
-        <div class="pg"><div class="pg-v">₹2.4L</div><div class="pg-l">Revenue</div></div>
-        <div class="pg"><div class="pg-v">97<small>%</small></div><div class="pg-l">On-time</div></div>
-      </div>
-      <!-- Invoice rows -->
-      <div class="prev-rows">
-        <div class="prev-row">
-          <div class="pr-icon">INV</div>
-          <div class="pr-info"><div class="pr-name">Mehta Traders</div><div class="pr-sub">GSTR-3B Filed</div></div>
-          <div class="pr-amt">₹1.2L</div>
-          <div class="pr-status st-done">Done</div>
+    <!-- 3D Floating Dashboard Card -->
+    <div class="hero-float-card" id="heroCard">
+      <div class="hfc-inner" id="heroCardInner">
+        <div class="hfc-bar">
+          <div class="hfc-dots"><div class="hfc-dot hd1"></div><div class="hfc-dot hd2"></div><div class="hfc-dot hd3"></div></div>
+          <div class="hfc-url">app.getsettld.in</div>
         </div>
-        <div class="prev-row">
-          <div class="pr-icon">INV</div>
-          <div class="pr-info"><div class="pr-name">Patel Industries</div><div class="pr-sub">GSTR-1 Pending</div></div>
-          <div class="pr-amt">₹84K</div>
-          <div class="pr-status st-pend">Review</div>
-        </div>
-        <div class="prev-row">
-          <div class="pr-icon">INV</div>
-          <div class="pr-info"><div class="pr-name">Shah Enterprises</div><div class="pr-sub">ITC Reconciled</div></div>
-          <div class="pr-amt">₹2.1L</div>
-          <div class="pr-status st-done">Done</div>
+        <div class="hfc-body">
+          <div class="hfc-title">CA Dashboard · March 2026</div>
+          <div class="hfc-chart">
+            <svg viewBox="0 0 300 64" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ED2F9" stop-opacity=".35"/>
+                  <stop offset="100%" stop-color="#8ED2F9" stop-opacity="0"/>
+                </linearGradient>
+                <clipPath id="rise">
+                  <rect x="0" y="0" width="300" height="64">
+                    <animate attributeName="width" from="0" to="300" dur="2.2s" begin="0.8s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+                  </rect>
+                </clipPath>
+              </defs>
+              <!-- Animated fill area — rises left to right -->
+              <path class="chart-fill" clip-path="url(#rise)" d="M0,48 C30,44 60,32 90,30 C120,28 150,40 180,24 C210,10 240,16 270,8 L300,6 L300,64 L0,64 Z" fill="url(#cg)"/>
+              <!-- Animated line draw -->
+              <path class="chart-line" d="M0,48 C30,44 60,32 90,30 C120,28 150,40 180,24 C210,10 240,16 270,8 L300,6" fill="none" stroke="#8ED2F9" stroke-width="1.5" stroke-linecap="round"/>
+              <!-- Pulsing dot at tip — appears after line completes -->
+              <circle class="chart-dot" cx="300" cy="6" r="3" fill="#8ED2F9">
+                <animate attributeName="r" values="3;5;3" dur="2s" begin="3s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="3s" fill="freeze"/>
+              </circle>
+            </svg>
+          </div>
+          <div class="hfc-stats">
+            <div class="hfc-stat"><div class="hfc-sv">48<small>cl</small></div><div class="hfc-sl">Active</div></div>
+            <div class="hfc-stat"><div class="hfc-sv">₹2.4L</div><div class="hfc-sl">Revenue</div></div>
+            <div class="hfc-stat"><div class="hfc-sv">97<small>%</small></div><div class="hfc-sl">On-time</div></div>
+          </div>
+          <div class="hfc-row"><div class="hfc-ico">INV</div><div class="hfc-info"><div class="hfc-name">Mehta Traders</div><div class="hfc-sub">GSTR-3B Filed</div></div><div class="hfc-amt">₹1.2L</div><div class="hfc-st st-ok st-ok-wrap"><span class="ck">✓</span> Done</div></div>
+          <div class="hfc-row"><div class="hfc-ico">INV</div><div class="hfc-info"><div class="hfc-name">Patel Industries</div><div class="hfc-sub">GSTR-1 Pending</div></div><div class="hfc-amt">₹84K</div><div class="hfc-st st-rv">Review</div></div>
+          <div class="hfc-row"><div class="hfc-ico">INV</div><div class="hfc-info"><div class="hfc-name">Shah Enterprises</div><div class="hfc-sub">ITC Reconciled</div></div><div class="hfc-amt">₹2.1L</div><div class="hfc-st st-ok st-ok-wrap"><span class="ck">✓</span> Done</div></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- TRUST -->
-<div class="trust-section">
-  <div class="trust-label">Built for firms that use</div>
-  <div class="trust-logos">
-    <div class="trust-logo">TallyPrime</div>
-    <div class="trust-logo">GSTN Portal</div>
-    <div class="trust-logo">Income Tax</div>
-    <div class="trust-logo">Zoho Books</div>
-    <div class="trust-logo">MCA21</div>
-  </div>
-</div>
+    <div class="hero-inner">
+      <div class="hero-badge"><span class="badge-pip"></span>Private Beta · CAs and Business Owners</div>
 
-<!-- PROBLEM -->
-<section class="problem-section" id="problem">
-  <div class="prob-grid"></div>
-  <div style="position:relative;z-index:2">
-    <div class="eyebrow reveal">The Reality</div>
-    <h2 class="sec-h2 reveal d1">
-      40 hours.<br>
-      <span class="dim">Every month.</span><br>
-      <span class="it sky">Thrown away.</span>
-    </h2>
-  </div>
+      <h1 class="hero-h1">
+        Less effort.<br>
+        <span class="dim">More clients.</span><br>
+        <span class="it">No headache.</span>
+      </h1>
 
-  <div class="prob-layout">
-    <div class="reveal d2">
-      <div class="big-num">
-        <span class="count-stat" data-t="40">0</span><span class="sfx">hrs</span>
+      <p class="hero-sub">
+        SETTLD gives back every hour your firm or business loses to manual compliance. Invoices extract themselves. Tally stays current without a single keystroke. Returns file on time, every time. And your clients always know exactly where things stand · real-time updates, zero chasing.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn-sky" onclick="showPage('home');activateTab('access')">
+          Get Early Access <span class="arr">→</span>
+        </a>
+        <a class="btn-outline" onclick="showPage('how')">
+          How it works
+        </a>
       </div>
-      <p class="big-cap">The average CA firm spends 40 hours a month on data entry alone. One full work week. Per firm. Per month. Into a task that should not exist.</p>
+
+
     </div>
 
-    <div class="prob-items stagger">
-      <div class="pi">
-        <div class="pi-n count-stat" data-t="80" data-sfx="hrs">0</div>
-        <div class="pi-t"><strong>Reconciling GSTR-2A by hand every month.</strong> One missed mismatch triggers an ITC reversal. The risk is not theoretical.</div>
+    <!-- Stats strip -->
+    <div class="stats-strip">
+      <div class="stat-item">
+        <div class="sv"><span class="count-anim" data-t="4">0</span>L<span class="u">+</span></div>
+        <div class="sl">CAs in India</div>
       </div>
-      <div class="pi">
-        <div class="pi-n count-stat" data-t="30" data-sfx="x">0</div>
-        <div class="pi-t"><strong>Clients chased manually every month.</strong> No system. No visibility. Just messages and missed deadlines.</div>
+      <div class="stat-item">
+        <div class="sv"><span class="count-anim" data-t="40">0</span><span class="u">hrs</span></div>
+        <div class="sl">Lost to data entry monthly</div>
       </div>
-      <div class="pi">
-        <div class="pi-n count-stat" data-t="67" data-sfx="K">0</div>
-        <div class="pi-t"><strong>Rupees of billable time lost per CA, per year</strong> on work that software should handle automatically.</div>
+      <div class="stat-item">
+        <div class="sv">₹<span class="count-anim" data-t="80">0</span><span class="u">K</span></div>
+        <div class="sl">Unrealised per CA per year</div>
       </div>
-      <div class="pi">
-        <div class="pi-n" style="font-size:16px;line-height:1.4;padding-top:4px">No<br>ceiling</div>
-        <div class="pi-t"><strong>Every new client adds more manual hours.</strong> Growth punishes instead of rewarding. That is the real problem.</div>
+      <div class="stat-item">
+        <div class="sv"><span class="count-anim" data-t="6">0</span><span class="u">Cr</span></div>
+        <div class="sl">MSMEs needing compliance</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- HOW IT WORKS -->
-<section class="how-section" id="solution">
-  <div class="how-grid"></div>
-  <div class="how-orb"></div>
-  <div class="how-orb2"></div>
+  <!-- EXPLORE TABS -->
+  <div class="explore">
+    <div class="tab-nav" id="tabNav">
+      <button class="tab-btn active" onclick="activateTab('problem')" data-tab="problem">
+        <span class="tab-num">1</span> The Problem
+      </button>
+      <button class="tab-btn" onclick="activateTab('solution')" data-tab="solution">
+        <span class="tab-num">2</span> How It Works
+      </button>
+      <button class="tab-btn" onclick="activateTab('platform')" data-tab="platform">
+        <span class="tab-num">3</span> The Platform
+      </button>
+      <button class="tab-btn" onclick="activateTab('access')" data-tab="access">
+        <span class="tab-num">4</span> Early Access
+      </button>
+    </div>
 
-  <div class="how-eyebrow reveal">How It Works</div>
-  <h2 class="how-h2 reveal d1">
-    You approve.<br>
-    <em>SETTLD handles</em><br>
-    <span class="it">everything else.</span>
-  </h2>
-  <p class="how-sub reveal d2">From photograph to filed return — SETTLD handles every step. Your firm becomes a review engine, not a data entry shop.</p>
+    <div class="tab-panels">
 
-  <div class="how-steps stagger">
-    <div class="how-step">
-      <div class="step-num">01</div>
-      <div class="step-title">Capture</div>
-      <p class="step-body">Phone camera or upload. Hindi, Gujarati, English or any Indian language. Printed or handwritten. Any format accepted.</p>
-    </div>
-    <div class="how-step">
-      <div class="step-num">02</div>
-      <div class="step-title">Read and Validate</div>
-      <p class="step-body">India-native extraction that reads Indian vernacular, scripts and government formats. Over 93% accuracy today. 100% is where we are heading.</p>
-    </div>
-    <div class="how-step">
-      <div class="step-num">03</div>
-      <div class="step-title">Sync to Tally</div>
-      <p class="step-body">One approval. Correct ledgers, correct split, correct narration pushed directly. Your existing Tally workflow stays exactly as it is.</p>
-    </div>
-    <div class="how-step">
-      <div class="step-num">04</div>
-      <div class="step-title">File the Return</div>
-      <p class="step-body">GSTR-1 and GSTR-3B prefilled from reconciled data. Review, approve, done. Acknowledgement stored and shared instantly.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PLATFORM -->
-<section class="plat-section" id="platform">
-  <div class="plat-header">
-    <div>
-      <div class="eyebrow reveal">The Platform</div>
-      <h2 class="sec-h2 reveal d1">Built for what<br>comes <span class="it sky">next.</span></h2>
-    </div>
-    <div class="plat-right reveal d2">
-      <p class="plat-sub">Five modules that change how CA firms operate, grow revenue and keep clients coming back permanently.</p>
-    </div>
-  </div>
-
-  <div class="cards stagger">
-    <div class="card">
-      <div class="card-vis">
-        <div class="v-ext">
-          <div class="ext-doc">
-            <div class="el w8"></div><div class="el w6"></div><div class="el w9"></div><div class="el w5"></div><div class="el w7"></div><div class="el w8"></div>
-            <div class="scan"></div>
-            <div class="ext-res">
-              <div class="er"><span class="ek">GSTIN</span><span class="ev">27AABCU9603</span></div>
-              <div class="er"><span class="ek">Total</span><span class="ev">₹1,18,000</span></div>
-              <div class="er"><span class="ek">IGST</span><span class="ev">₹18,000</span></div>
+      <!-- TAB 1: PROBLEM -->
+      <div class="tab-panel active" id="tab-problem">
+        <div class="prob-layout">
+          <div>
+            <div class="big-num"><span class="count-stat" data-t="40">0</span><span class="sfx">hrs</span></div>
+            <p class="big-cap">The average CA firm types data into Tally for 40 hours every month. One full work week. Vanished.</p>
+            <div style="margin-top:24px">
+              <a class="btn-sky" onclick="showPage('cas')" style="display:inline-flex">
+                See the full picture →
+              </a>
+            </div>
+          </div>
+          <div class="prob-rows">
+            <div class="pr">
+              <div class="pr-n count-stat" data-t="80" data-sfx="hrs">0</div>
+              <div class="pr-t"><strong>Reconciling GSTR-2A by hand.</strong> One missed mismatch becomes an ITC reversal demand.</div>
+            </div>
+            <div class="pr">
+              <div class="pr-n count-stat" data-t="30" data-sfx="x">0</div>
+              <div class="pr-t"><strong>Clients chased manually every month.</strong> No system. No visibility. Just messages and missed deadlines.</div>
+            </div>
+            <div class="pr">
+              <div class="pr-n count-stat" data-t="67" data-sfx="K">0</div>
+              <div class="pr-t"><strong>Rupees of billable time lost per CA, per year</strong> on work software should handle automatically.</div>
+            </div>
+            <div class="pr">
+              <div class="pr-n" style="font-size:16px;line-height:1.4">No<br>ceiling</div>
+              <div class="pr-t"><strong>Every new client adds more manual hours.</strong> Growth punishes instead of rewarding you.</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="card-tag">Invoice Intelligence</div>
-      <div class="card-h">India-native. Vernacular-ready.</div>
-      <p class="card-p">Reads every Indian language and government format natively. Extracts every GST field before a human has even looked at the document.</p>
-    </div>
 
-    <div class="card">
-      <div class="card-vis">
-        <div class="v-tally">
-          <div class="tb"><div class="tbl">Invoice</div><div class="tbn">SETTLD</div></div>
-          <div class="t-mid"><div class="ta"></div><div class="ta r"></div></div>
-          <div class="tb"><div class="tbl">Voucher</div><div class="tbn">Tally</div></div>
-        </div>
-      </div>
-      <div class="card-tag">Tally Bridge</div>
-      <div class="card-h">Zero retyping. Forever.</div>
-      <p class="card-p">Connects to TallyPrime. Reads your ledger structure and pushes correctly formatted vouchers. Nothing in your workflow changes.</p>
-    </div>
-
-    <div class="card">
-      <div class="card-vis">
-        <div class="v-recon">
-          <div class="rr"><span class="rt g">Matched</span><div class="rtrack"><div class="rfill f1"></div></div><span class="rv">₹84L</span></div>
-          <div class="rr"><span class="rt a">Alert</span><div class="rtrack"><div class="rfill f2"></div></div><span class="rv">₹12L</span></div>
-          <div class="rr"><span class="rt w">Pending</span><div class="rtrack"><div class="rfill f3"></div></div><span class="rv">₹6L</span></div>
-        </div>
-      </div>
-      <div class="card-tag">Reconciliation</div>
-      <div class="card-h">ITC you keep, not lose.</div>
-      <p class="card-p">GSTR-2A and 2B fetched automatically every month. Every mismatch surfaced before the deadline, not after the notice arrives.</p>
-    </div>
-
-    <div class="card">
-      <div class="card-vis">
-        <div class="v-notif">
-          <div class="notif"><span class="npip np-b"></span><div class="nt"><strong>GSTR-3B filed successfully</strong>March 2026 return filed. Acknowledgement ready.</div><span class="ntime">Just now</span></div>
-          <div class="notif"><span class="npip np-n"></span><div class="nt"><strong>GSTR-1 due in 3 days</strong>2 clients pending documents.</div><span class="ntime">2h ago</span></div>
-          <div class="notif"><span class="npip np-l"></span><div class="nt"><strong>ITC mismatch — ₹4,200</strong>Review before filing.</div><span class="ntime">Yesterday</span></div>
-        </div>
-      </div>
-      <div class="card-tag">Client Peace of Mind</div>
-      <div class="card-h">They stop asking. You stop explaining.</div>
-      <p class="card-p">Real-time notifications on every filing, every deadline, every status change. Clients stay because they always know exactly where they stand.</p>
-    </div>
-
-    <div class="card full">
-      <div class="card-vis">
-        <div class="v-dash">
-          <div class="dside"><div class="di act"></div><div class="di"></div><div class="di"></div><div class="di"></div></div>
-          <div class="dgrid">
-            <div class="dw"><div class="dv">48<small>clients</small></div><div class="dl">Active</div><div class="db"><div class="dbf" style="width:88%"></div></div></div>
-            <div class="dw"><div class="dv">₹2.4L</div><div class="dl">This month</div><div class="db"><div class="dbf" style="width:72%"></div></div></div>
-            <div class="dw"><div class="dv">6<small>due</small></div><div class="dl">Pending returns</div><div class="db"><div class="dbf" style="width:30%"></div></div></div>
-            <div class="dw"><div class="dv">97<small>%</small></div><div class="dl">On-time rate</div><div class="db"><div class="dbf" style="width:97%"></div></div></div>
+      <!-- TAB 2: HOW IT WORKS -->
+      <div class="tab-panel" id="tab-solution">
+        <div class="how-steps-wrap">
+          <div class="how-steps">
+            <div class="how-step">
+              <div class="step-n">01</div>
+              <div class="step-h">Capture</div>
+              <p class="step-p">Phone camera or upload. Hindi, Gujarati, English or any Indian language. Printed or handwritten.</p>
+            </div>
+            <div class="how-step">
+              <div class="step-n">02</div>
+              <div class="step-h">Read and Validate</div>
+              <p class="step-p">India-native extraction reads Indian vernacular and government formats. Over 93% accuracy. 100% is the goal.</p>
+            </div>
+            <div class="how-step">
+              <div class="step-n">03</div>
+              <div class="step-h">Sync to Tally</div>
+              <p class="step-p">One approval. Correct ledgers, correct split, correct narration pushed directly to TallyPrime.</p>
+            </div>
+            <div class="how-step">
+              <div class="step-n">04</div>
+              <div class="step-h">File the Return</div>
+              <p class="step-p">GSTR-1 and GSTR-3B prefilled from reconciled data. Review, approve, done.</p>
+            </div>
+          </div>
+          <div style="margin-top:24px">
+            <a class="btn-outline" onclick="showPage('how')" style="display:inline-flex">
+              Deep dive into how it works →
+            </a>
           </div>
         </div>
       </div>
-      <div class="card-tag">CA Command Centre</div>
-      <div class="card-h">Every client. Every return. Every deadline. One screen.</div>
-      <p class="card-p">Revenue tracked per client. Filing status visible at a glance. Nothing falls through. Your practice grows because you have full visibility, not because you work longer hours.</p>
+
+      <!-- TAB 3: PLATFORM -->
+      <div class="tab-panel" id="tab-platform">
+        <div class="plat-grid">
+          <div class="plat-card">
+            <div class="card-vis">
+              <div class="doc-lines">
+                <div class="dl w8"></div><div class="dl w6"></div><div class="dl w9"></div><div class="dl w5"></div>
+              </div>
+              <div class="scan"></div>
+            </div>
+            <div class="pc-tag">Invoice Intelligence</div>
+            <div class="pc-h">India-native extraction</div>
+            <p class="pc-p">Reads every Indian language and government format. 93%+ accuracy from day one.</p>
+          </div>
+
+          <div class="plat-card">
+            <div class="card-vis">
+              <div class="flow-vis">
+                <div class="fbox">SETTLD</div>
+                <div class="farr"></div>
+                <div class="fbox">Tally</div>
+              </div>
+            </div>
+            <div class="pc-tag">Tally Bridge</div>
+            <div class="pc-h">Zero retyping, forever</div>
+            <p class="pc-p">Reads your ledger structure and pushes correctly formatted vouchers. Workflow unchanged.</p>
+          </div>
+
+          <div class="plat-card">
+            <div class="card-vis">
+              <div class="recon-vis">
+                <div class="rb"><span class="rt g">Matched</span><div class="rtrack"><div class="rfill f1"></div></div></div>
+                <div class="rb"><span class="rt a">Alert</span><div class="rtrack"><div class="rfill f2"></div></div></div>
+                <div class="rb"><span class="rt w">Pending</span><div class="rtrack"><div class="rfill f3"></div></div></div>
+              </div>
+            </div>
+            <div class="pc-tag">Reconciliation</div>
+            <div class="pc-h">ITC you keep, not lose</div>
+            <p class="pc-p">GSTR-2A and 2B fetched automatically. Every mismatch surfaced before the deadline.</p>
+          </div>
+
+          <div class="plat-card">
+            <div class="card-vis">
+              <div class="notif-vis">
+                <div class="nv"><span class="npip np-b"></span><span class="ntext">GSTR-3B filed · March 2026</span></div>
+                <div class="nv"><span class="npip np-n"></span><span class="ntext">GSTR-1 due in 3 days</span></div>
+                <div class="nv"><span class="npip np-l"></span><span class="ntext">ITC mismatch ₹4,200 · review</span></div>
+              </div>
+            </div>
+            <div class="pc-tag">Client Updates</div>
+            <div class="pc-h">They stop asking</div>
+            <p class="pc-p">Real-time notifications for every filing, deadline and status change. Sent directly to your clients.</p>
+          </div>
+
+          <div class="plat-card wide">
+            <div class="card-vis">
+              <div class="dash-vis">
+                <div class="dside"><div class="di a"></div><div class="di"></div><div class="di"></div></div>
+                <div class="dgrid">
+                  <div class="dw"><div class="dv">48<small>cl</small></div><div class="dl2">Active</div><div class="db"><div class="dbf" style="width:88%"></div></div></div>
+                  <div class="dw"><div class="dv">₹2.4L</div><div class="dl2">Revenue</div><div class="db"><div class="dbf" style="width:72%"></div></div></div>
+                  <div class="dw"><div class="dv">6<small>due</small></div><div class="dl2">Pending</div><div class="db"><div class="dbf" style="width:30%"></div></div></div>
+                  <div class="dw"><div class="dv">97<small>%</small></div><div class="dl2">On-time</div><div class="db"><div class="dbf" style="width:97%"></div></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="pc-tag">CA Command Centre</div>
+            <div class="pc-h">Every client. Every return. Every deadline. One screen.</div>
+            <p class="pc-p">Revenue tracked per client. Nothing falls through. Your practice grows because you have full visibility, not because you work longer hours.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: EARLY ACCESS -->
+      <div class="tab-panel" id="tab-access" style="background:var(--ink);padding:48px;position:relative;overflow:hidden">
+        <div class="ea-layout" style="position:relative;z-index:2">
+          <!-- Grid bg on dark panel -->
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(142,210,249,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(142,210,249,0.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;border-radius:inherit"></div>
+          <div class="ea-left" style="position:relative;z-index:2">
+            <div class="ea-tag" style="color:var(--sky)">Early Access</div>
+            <h2 class="ea-h" style="color:var(--cloud)">
+              First 20.<br>
+              <em>6 months <span class="it">free.</span></em>
+            </h2>
+            <p class="ea-sub" style="color:rgba(240,237,232,0.6)">We are onboarding 20 CA firms and business owners to shape the product together. Full access, direct input into what gets built, and 6 months at zero cost.</p>
+            <div class="ea-perks">
+              <div class="ea-perk" style="background:rgba(142,210,249,0.06);border-color:rgba(142,210,249,0.1)">
+                <div class="perk-pip" style="background:var(--sky);color:var(--navy)">1</div>
+                <div class="perk-t" style="color:var(--cloud)">Full product access from day one <span style="color:rgba(240,237,232,0.5)">All 5 modules unlocked. No feature gates.</span></div>
+              </div>
+              <div class="ea-perk" style="background:rgba(142,210,249,0.06);border-color:rgba(142,210,249,0.1)">
+                <div class="perk-pip" style="background:var(--sky);color:var(--navy)">2</div>
+                <div class="perk-t" style="color:var(--cloud)">Direct line to the founding team <span style="color:rgba(240,237,232,0.5)">Weekly calls. Your feedback shapes the roadmap.</span></div>
+              </div>
+              <div class="ea-perk" style="background:rgba(142,210,249,0.06);border-color:rgba(142,210,249,0.1)">
+                <div class="perk-pip" style="background:var(--sky);color:var(--navy)">3</div>
+                <div class="perk-t" style="color:var(--cloud)">6 months completely free <span style="color:rgba(240,237,232,0.5)">No credit card. No contract. No catch.</span></div>
+              </div>
+            </div>
+            <!-- Who it's for -->
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+              <div style="display:flex;align-items:center;gap:6px;background:rgba(142,210,249,0.08);border:1px solid rgba(142,210,249,0.15);border-radius:6px;padding:7px 12px">
+                <span style="font-size:14px">🏢</span>
+                <span style="font-size:12px;font-weight:600;color:rgba(240,237,232,0.7)">CA Firms</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;background:rgba(142,210,249,0.08);border:1px solid rgba(142,210,249,0.15);border-radius:6px;padding:7px 12px">
+                <span style="font-size:14px">👤</span>
+                <span style="font-size:12px;font-weight:600;color:rgba(240,237,232,0.7)">Business Owners</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;background:rgba(142,210,249,0.08);border:1px solid rgba(142,210,249,0.15);border-radius:6px;padding:7px 12px">
+                <span style="font-size:14px">🏭</span>
+                <span style="font-size:12px;font-weight:600;color:rgba(240,237,232,0.7)">MSMEs</span>
+              </div>
+            </div>
+          </div>
+          <div class="ea-right" style="position:relative;z-index:2">
+            <div class="ea-ring er1"></div>
+            <div class="ea-ring er2"></div>
+            <div class="ea-card-inner">
+              <div class="ea-card-logo"><span class="ecl-b">SETT</span><span class="ecl-l">LD</span></div>
+              <div class="ea-card-tag">Private Beta</div>
+              <div class="ea-card-h">Apply for early access</div>
+              <p class="ea-card-sub">CA firm or business owner · tell us about yourself and we will reach out within 24 hours.</p>
+              <div class="ea-spots">
+                <div class="spots-bar"><div class="spots-fill"></div></div>
+                <div class="spots-text">Limited spots</div>
+              </div>
+              <a href="mailto:hello@getsettld.in?subject=Early Access Application" class="ea-btn">
+                Apply Now
+              </a>
+              <p class="ea-fine">Invite only · No credit card · 6 months free</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-panels -->
+  </div><!-- /explore -->
+
+  <footer>
+    <a class="foot-logo" onclick="showPage('home')"><span class="fb">SETT</span><span class="fl2">LD</span></a>
+    <ul class="foot-links">
+      <li><a onclick="showPage('cas')">For CAs</a></li>
+      <li><a onclick="showPage('how')">How It Works</a></li>
+      <li><a onclick="showPage('home');activateTab('access')">Early Access</a></li>
+      <li><a href="mailto:hello@getsettld.in">Contact</a></li>
+    </ul>
+    <div class="foot-copy">Built in India. 2026.</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: FOR CAs
+═══════════════════════════════════════════ -->
+<div class="page" id="page-cas">
+  <div class="subpage">
+    <a class="subpage-back" onclick="showPage('home')">← Back</a>
+    <div class="subpage-eye">For CA Firms</div>
+    <h1 class="subpage-h">
+      Your firm.<br>
+      <span class="it sky">Automated.</span><br>
+      Finally.
+    </h1>
+    <p class="subpage-sub">Everything SETTLD does for your practice · explained clearly. No jargon. No fluff.</p>
+
+    <div class="ca-grid">
+      <div class="ca-card">
+        <div class="ca-icon">📄</div>
+        <div class="ca-h">Invoice Capture</div>
+        <p class="ca-p">Phone camera or upload. Any Indian language, any format. Handwritten or printed. SETTLD reads it before you blink.</p>
+        <div class="ca-stat">93%<span style="font-size:.5em;color:var(--navy60)"> accuracy</span></div>
+        <div class="ca-stat-l">India-native extraction, 100% is the target</div>
+      </div>
+      <div class="ca-card">
+        <div class="ca-icon">🔄</div>
+        <div class="ca-h">Tally Sync</div>
+        <p class="ca-p">Correct ledgers, correct split, correct narration pushed directly to TallyPrime. One approval. Zero retyping. Your workflow stays unchanged.</p>
+        <div class="ca-stat">0<span style="font-size:.5em;color:var(--navy60)"> manual entries</span></div>
+        <div class="ca-stat-l">After every invoice is processed</div>
+      </div>
+      <div class="ca-card">
+        <div class="ca-icon">✅</div>
+        <div class="ca-h">GST Reconciliation</div>
+        <p class="ca-p">GSTR-2A and 2B fetched automatically on the 14th and 15th. Every mismatch flagged before the deadline. ITC you keep, not lose.</p>
+        <div class="ca-stat">₹12L<span style="font-size:.5em;color:var(--navy60)"> avg ITC saved</span></div>
+        <div class="ca-stat-l">Per firm per year from caught mismatches</div>
+      </div>
+      <div class="ca-card">
+        <div class="ca-icon">📱</div>
+        <div class="ca-h">Client Updates</div>
+        <p class="ca-p">Clients get real-time notifications on every filing, every deadline, every status change. They stop calling. You stop explaining.</p>
+        <div class="ca-stat">0<span style="font-size:.5em;color:var(--navy60)"> follow-up calls</span></div>
+        <div class="ca-stat-l">When clients have full visibility</div>
+      </div>
+      <div class="ca-card">
+        <div class="ca-icon">📊</div>
+        <div class="ca-h">GST Filing</div>
+        <p class="ca-p">GSTR-1 and GSTR-3B prefilled from reconciled data. Your CFO-level review screen. One click to file. Acknowledgement stored automatically.</p>
+        <div class="ca-stat">3x<span style="font-size:.5em;color:var(--navy60)"> faster filing</span></div>
+        <div class="ca-stat-l">Compared to manual preparation</div>
+      </div>
+      <div class="ca-card">
+        <div class="ca-icon">🖥️</div>
+        <div class="ca-h">CA Command Centre</div>
+        <p class="ca-p">Every client, every return, every deadline in one view. Revenue tracked per client. Nothing falls through the cracks ever again.</p>
+        <div class="ca-stat">3x<span style="font-size:.5em;color:var(--navy60)"> client capacity</span></div>
+        <div class="ca-stat-l">Same headcount, no extra hiring</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:8px">
+      <a class="btn-sky" onclick="showPage('home');activateTab('access')" style="display:inline-flex;align-items:center;gap:8px">Apply for Early Access →</a>
+      <a class="btn-outline" onclick="showPage('how')" style="display:inline-flex;align-items:center">How it works</a>
     </div>
   </div>
-</section>
+  <footer>
+    <a class="foot-logo" onclick="showPage('home')"><span class="fb">SETT</span><span class="fl2">LD</span></a>
+    <ul class="foot-links">
+      <li><a onclick="showPage('cas')">For CAs</a></li>
+      <li><a onclick="showPage('how')">How It Works</a></li>
+      <li><a onclick="showPage('home');activateTab('access')">Early Access</a></li>
+      <li><a href="mailto:hello@getsettld.in">Contact</a></li>
+    </ul>
+    <div class="foot-copy">Built in India. 2026.</div>
+  </footer>
+</div>
 
-<!-- LOGO SECTION -->
-<section class="logo-section">
-  <div class="logo-grid-bg"></div>
-  <div class="logo-wm"><span class="wm-b">SETT</span><span class="wm-l">LD</span></div>
-  <div class="logo-inner reveal">
-    <div class="logo-eyebrow">India's Compliance Platform</div>
-    <div class="logo-mark">
-      <span class="lm-b">SETT</span><span class="lm-l">LD</span>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: HOW IT WORKS
+═══════════════════════════════════════════ -->
+<div class="page" id="page-how">
+  <div class="subpage">
+    <a class="subpage-back" onclick="showPage('home')">← Back</a>
+    <div class="subpage-eye">How It Works</div>
+    <h1 class="subpage-h">
+      From photograph<br>
+      to <span class="it sky">filed return.</span>
+    </h1>
+    <p class="subpage-sub">Every step SETTLD takes between receiving an invoice and filing your return · explained clearly and completely.</p>
+
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-num">01</div>
+        <div class="hiw-content">
+          <div class="hiw-tag">Capture</div>
+          <div class="hiw-h">Photograph or upload the invoice</div>
+          <p class="hiw-p">Your client or staff photographs the invoice on a phone. Or uploads a PDF, scan or image. Hindi, Gujarati, Marathi, English · any Indian language accepted. Handwritten or printed. Government format or private supplier format. SETTLD accepts everything without configuration.</p>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">02</div>
+        <div class="hiw-content">
+          <div class="hiw-tag">Read and Validate</div>
+          <div class="hiw-h">India-native extraction reads every field</div>
+          <p class="hiw-p">Our extraction engine is built specifically for Indian documents. It understands Indian vernacular, Indian address formats, Indian GST structures and Indian government document layouts natively · not as a translation of a Western model. Every GST field is extracted: GSTIN, invoice number, date, HSN codes, line items, tax breakdowns, totals. Fifteen validation rules check accuracy before anything moves.</p>
+          <div class="acc-bar-wrap">
+            <div class="acc-label"><span>Current accuracy on printed invoices</span><span>93%+</span></div>
+            <div class="acc-track"><div class="acc-fill" style="width:93%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">03</div>
+        <div class="hiw-content">
+          <div class="hiw-tag">Sync to Tally</div>
+          <div class="hiw-h">One approval pushes to TallyPrime</div>
+          <p class="hiw-p">SETTLD reads your existing Tally ledger structure · your ledger names, your groups, your cost centres. It maps each invoice to the correct ledgers automatically. You review the mapping on a clean screen and click approve. The voucher pushes to Tally with the correct narration, the correct tax split and the correct ledger entries. Your Tally workflow is unchanged. Nothing needs to be reconfigured.</p>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">04</div>
+        <div class="hiw-content">
+          <div class="hiw-tag">Reconciliation</div>
+          <div class="hiw-h">GSTR-2A and 2B fetched and matched automatically</div>
+          <p class="hiw-p">On the 14th and 15th of every month SETTLD fetches your GSTR-2A and 2B from the GSTN portal automatically. It matches every line against your purchase register. Mismatches are flagged with the exact supplier, invoice number, date and amount difference. You see matched, alerting and pending in one clear view. No manual download. No spreadsheet. No missed ITC claim.</p>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">05</div>
+        <div class="hiw-content">
+          <div class="hiw-tag">File the Return</div>
+          <div class="hiw-h">GSTR-1 and GSTR-3B prefilled and ready to file</div>
+          <p class="hiw-p">GSTR-1 is prefilled from your outward supply data. GSTR-3B is prefilled from reconciled inward and outward data. You see a clean review screen · the same structure as the actual return · with every figure sourced and traceable. You approve. SETTLD files. Acknowledgement is stored automatically and shared with your client instantly.</p>
+        </div>
+      </div>
     </div>
-    <p class="logo-tagline">Less effort. More clients. No headache.</p>
+
+    <div style="display:flex;gap:12px;margin-top:12px">
+      <a class="btn-sky" onclick="showPage('home');activateTab('access')" style="display:inline-flex;align-items:center;gap:8px">Apply for Early Access →</a>
+      <a class="btn-outline" onclick="showPage('cas')" style="display:inline-flex;align-items:center">See what changes for your firm</a>
+    </div>
   </div>
-</section>
-
-<!-- MOMENTUM -->
-<section class="mom-section" id="growth">
-  <div class="eyebrow reveal">What Changes</div>
-  <h2 class="sec-h2 reveal d1" style="margin-top:16px">The numbers<br>that <span class="it sky">move.</span></h2>
-
-  <div class="mom-grid stagger">
-    <div class="mom-item">
-      <div class="mom-v"><span class="mv-n count-stat" data-t="3">0</span><span class="mv-u">X</span></div>
-      <div class="mom-t">Client capacity, same headcount</div>
-      <p class="mom-p">When data entry drops to near zero your team handles three times the clients. Growth stops being a hiring problem.</p>
-    </div>
-    <div class="mom-item">
-      <div class="mom-v"><span class="mv-n">₹</span><span class="mv-n count-stat" data-t="80">0</span><span class="mv-u">K</span></div>
-      <div class="mom-t">Recovered billable time per year</div>
-      <p class="mom-p">Per CA. Hours in re-entry and reconciliation become advisory time that commands a premium.</p>
-    </div>
-    <div class="mom-item">
-      <div class="mom-v"><span class="mv-n count-stat" data-t="100">0</span><span class="mv-u">%</span></div>
-      <div class="mom-t">Clients always in the loop</div>
-      <p class="mom-p">Real-time status, deadline reminders and instant acknowledgements. Your phone stops ringing mid-month.</p>
-    </div>
-    <div class="mom-item">
-      <div class="mom-v"><span class="mv-n">₹</span><span class="mv-n count-stat" data-t="423">0</span><span class="mv-u">Cr</span></div>
-      <div class="mom-t">India market by Year 3</div>
-      <p class="mom-p">4 lakh CAs. 6 crore MSMEs. One platform. The window for early adopters closes soon.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section" id="cta">
-  <div class="cta-grid"></div>
-  <div class="cta-ring cr1"></div>
-  <div class="cta-ring cr2"></div>
-  <div class="cta-ring cr3"></div>
-  <div class="cta-glow"></div>
-  <div class="cta-in">
-    <div class="cta-eye reveal">Early Access</div>
-    <h2 class="cta-h2 reveal d1">
-      First 20 firms.<br>
-      <em>6 months <span class="it">free.</span></em><br>
-      No compromise.
-    </h2>
-    <p class="cta-sub reveal d2">We are onboarding 20 CA firms to shape the product together. 6 months free. You build your practice while we handle the infrastructure.</p>
-    <div class="cta-actions reveal d3">
-      <a href="mailto:hello@getsettld.in" class="cta-btn">Apply for Early Access →</a>
-    </div>
-    <p class="cta-fine reveal d4">Invite only. No credit card required.</p>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <a href="#home" class="foot-logo"><span class="fb">SETT</span><span class="fl">LD</span></a>
-  <ul class="foot-links">
-    <li><a href="#problem">Problem</a></li>
-    <li><a href="#solution">Solution</a></li>
-    <li><a href="#platform">Platform</a></li>
-    <li><a href="mailto:hello@getsettld.in">Contact</a></li>
-  </ul>
-  <div class="foot-copy">Built in India. 2026.</div>
-</footer>
+  <footer>
+    <a class="foot-logo" onclick="showPage('home')"><span class="fb">SETT</span><span class="fl2">LD</span></a>
+    <ul class="foot-links">
+      <li><a onclick="showPage('cas')">For CAs</a></li>
+      <li><a onclick="showPage('how')">How It Works</a></li>
+      <li><a onclick="showPage('home');activateTab('access')">Early Access</a></li>
+      <li><a href="mailto:hello@getsettld.in">Contact</a></li>
+    </ul>
+    <div class="foot-copy">Built in India. 2026.</div>
+  </footer>
+</div>
 
 <script>
 // CURSOR
@@ -1157,13 +1278,39 @@ document.querySelectorAll('a,button').forEach(el=>{
   el.addEventListener('mouseleave',()=>document.body.classList.remove('lh'));
 });
 
-// NAV
+// NAV SCROLL
 const nav=document.getElementById('nav');
-const cn=()=>nav.classList.toggle('sc',scrollY>20);
-window.addEventListener('scroll',cn);cn();
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>20));
+
+// PAGE SYSTEM
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo(0,0);
+  // update nav active state
+  document.querySelectorAll('.nav-link').forEach(l=>{
+    l.classList.toggle('active', l.dataset.page===id);
+  });
+  // trigger count-up for newly visible page
+  setTimeout(()=>initCounters(),100);
+}
+
+// TAB SYSTEM
+function activateTab(name){
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    b.classList.toggle('active',b.dataset.tab===name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p=>{
+    p.classList.toggle('active',p.id==='tab-'+name);
+  });
+  // scroll to tabs
+  const explore=document.querySelector('.explore');
+  if(explore) explore.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>initCounters(),100);
+}
 
 // COUNT UP
-function countUp(el,target,dur=2000){
+function countUp(el,target,dur=1800){
   const sfx=el.dataset.sfx||'';
   let s=null;
   (function step(ts){
@@ -1174,29 +1321,105 @@ function countUp(el,target,dur=2000){
     if(p<1)requestAnimationFrame(step);
   })(performance.now());
 }
-const co=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(e.isIntersecting){countUp(e.target,parseInt(e.target.dataset.t||0));co.unobserve(e.target)}
-}),{threshold:.3});
-document.querySelectorAll('.count-anim,.count-stat').forEach(el=>{el.textContent='0';co.observe(el)});
+const counted=new Set();
+function initCounters(){
+  const co=new IntersectionObserver(entries=>entries.forEach(e=>{
+    if(e.isIntersecting && !counted.has(e.target)){
+      counted.add(e.target);
+      countUp(e.target,parseInt(e.target.dataset.t||0));
+      co.unobserve(e.target);
+    }
+  }),{threshold:.3});
+  document.querySelectorAll('.count-anim,.count-stat').forEach(el=>{
+    if(!counted.has(el)){el.textContent='0';co.observe(el)}
+  });
+}
+initCounters();
 
-// SCROLL REVEAL
-const ro=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(e.isIntersecting)e.target.classList.add('in');
-}),{threshold:.08});
-document.querySelectorAll('.reveal,.stagger').forEach(el=>ro.observe(el));
-
-// SMOOTH SCROLL
+// SMOOTH SCROLL for hash links
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
   const t=document.querySelector(a.getAttribute('href'));
   if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
 }));
 
-// PARALLAX on hero geo shapes
-window.addEventListener('scroll',()=>{
-  const s=scrollY*.15;
-  document.querySelector('.geo-circle').style.transform=`translateY(calc(-50% + ${s}px))`;
-  document.querySelector('.geo-circle2').style.transform=`translateY(calc(-50% + ${s*.7}px))`;
-});
+// 3D TILT on cards
+function addTilt(selector, maxDeg=8, scale=1.03){
+  document.querySelectorAll(selector).forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5;
+      const y=(e.clientY-r.top)/r.height-.5;
+      card.style.transform=`perspective(800px) rotateX(${-y*maxDeg}deg) rotateY(${x*maxDeg}deg) scale(${scale}) translateY(-2px)`;
+      card.style.boxShadow=`${-x*20}px ${-y*20}px 40px rgba(30,30,122,0.12)`;
+    });
+    card.addEventListener('mouseleave',()=>{
+      card.style.transform='';
+      card.style.boxShadow='';
+    });
+  });
+}
+// Apply tilt after a short delay to allow DOM to settle
+setTimeout(()=>{
+  addTilt('.how-step', 7, 1.02);
+  addTilt('.plat-card', 6, 1.02);
+  addTilt('.ca-card', 7, 1.03);
+  addTilt('.stat-item', 5, 1.01);
+  addTilt('.hiw-step', 3, 1.005);
+},300);
+
+// 3D MOUSE PARALLAX on hero card
+const heroCard=document.getElementById('heroCard');
+const heroCardInner=document.getElementById('heroCardInner');
+if(heroCard && heroCardInner){
+  document.addEventListener('mousemove',e=>{
+    const cx=window.innerWidth/2, cy=window.innerHeight/2;
+    const dx=(e.clientX-cx)/cx, dy=(e.clientY-cy)/cy;
+    heroCardInner.style.transform=`rotateX(${-dy*5+2}deg) rotateY(${dx*5-3}deg)`;
+  });
+}
+
+// RE-APPLY tilt on page/tab change
+const _origShowPage=showPage;
+function showPage(id){
+  _origShowPage(id);
+  setTimeout(()=>{
+    addTilt('.how-step',7,1.02);
+    addTilt('.plat-card',6,1.02);
+    addTilt('.ca-card',7,1.03);
+    addTilt('.stat-item',5,1.01);
+    addTilt('.hiw-step',3,1.005);
+  },500);
+}
+
+// REPLAY dashboard card animations on loop
+function replayDashboard(){
+  const rows=document.querySelectorAll('.hfc-row');
+  const line=document.querySelector('.chart-line');
+  const fill=document.querySelector('.chart-fill');
+  const dot=document.querySelector('.chart-dot');
+  const dones=document.querySelectorAll('.st-ok-wrap');
+  const cks=document.querySelectorAll('.ck');
+  // Reset
+  rows.forEach(r=>{r.style.animation='none';r.style.opacity='0'});
+  if(line) line.style.animation='none';
+  if(fill) fill.style.animation='none';
+  dones.forEach(d=>d.style.animation='none');
+  cks.forEach(c=>c.style.animation='none');
+  // Force reflow
+  void document.querySelector('.hfc-chart')?.offsetWidth;
+  // Re-apply
+  setTimeout(()=>{
+    if(line){line.style.animation='';line.style.strokeDashoffset='420'}
+    if(fill){fill.style.animation=''}
+    rows.forEach((r,i)=>{
+      r.style.animation='';
+    });
+    dones.forEach(d=>d.style.animation='');
+    cks.forEach(c=>c.style.animation='');
+  },50);
+}
+// Replay every 7s so it loops continuously
+setInterval(replayDashboard, 7000);
 </script>
 </body>
 </html>
