@@ -583,7 +583,7 @@ footer{padding-top:70px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 // >>> EDIT THIS ONE LINE: the address of the submitLead function in your SETTLD app
-var LEAD_URL = "https://app.getsettld.in/functions/submitLead";
+var LEAD_URL = "https://settld-a86983d4.base44.app/functions/submitLead";
 
 // ---- Lead form: every CTA opens it
 (function(){
@@ -608,7 +608,7 @@ var LEAD_URL = "https://app.getsettld.in/functions/submitLead";
     if (!v('lName') || !v('lFirm')) { err.textContent = 'Please add your name and ' + (type === 'CA firm' ? 'firm name.' : 'business name.'); return; }
     if (!phone && !v('lEmail')) { err.textContent = 'Please add a mobile number or an email.'; return; }
     if (phone && phone.length !== 10) { err.textContent = 'Please enter a 10 digit mobile number.'; return; }
-    var data = { name: v('lName'), firm: v('lFirm'), phone: phone, email: v('lEmail'), city: v('lCity'), clients: type === 'CA firm' ? v('lClients') : '', message: v('lMsg'), type: type, website: v('lWeb'), source: location.href };
+    var data = { name: v('lName'), firm_name: v('lFirm'), phone: phone, email: v('lEmail'), city: v('lCity'), client_count: type === 'CA firm' ? v('lClients') : '', message: v('lMsg'), type: type, website: v('lWeb'), source_page: location.href };
     btn.disabled = true; btn.textContent = 'Sending…';
     fetch(LEAD_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
       .then(function(r){ if (!r.ok) throw new Error(); return r.json(); })
