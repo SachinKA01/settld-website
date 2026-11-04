@@ -1,0 +1,24 @@
+{
+  "name": "settld-website",
+  "version": "1.0.0",
+  "description": "SETTLD - Never miss a tax filing again",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SachinKA01/settld-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SachinKA01/settld-website/issues"
+  },
+  "homepage": "https://github.com/SachinKA01/settld-website#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
